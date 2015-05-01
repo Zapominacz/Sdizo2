@@ -5,12 +5,12 @@
 class EdgeList {
 private:
 	struct EdgeNode {
-		unsigned int vertex;
-		int weight;
+		Edge value;
 		EdgeNode* next;
-		EdgeNode(int vertex, int weight) {
-			this->vertex = vertex;
-			this->weight = weight;
+		EdgeNode(int vertex2, int weight) {
+			value = Edge(-1, vertex2, weight);
+		}
+		~EdgeNode() {
 		}
 	};
 	EdgeNode* head;
@@ -20,10 +20,11 @@ public:
 	inline unsigned getSize() { return size; }
 	EdgeList() {}
 	EdgeList(int);
+	EdgeList(EdgeList*);
 	~EdgeList();
 	void removeList(void);
 	void add(unsigned int, int);
 	bool exist(unsigned);
 	bool remove(unsigned);
-	int getWeight(unsigned);
+	Edge getVal(unsigned);
 };

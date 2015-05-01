@@ -1,7 +1,6 @@
 #pragma once
 #include "stdafx.h"
 #include "GraphRepresentationInterface.h"
-#include "EdgeList.h"
 
 class ListGraphRepresentation : public GraphRepresentationInterface {
 public:
@@ -12,6 +11,7 @@ public:
 	virtual bool deleteEdge(unsigned, unsigned);
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);
+	virtual EdgeList* getAdjFor(unsigned);
 private:
 	EdgeList** edgesList;
 	void removeLists(void);

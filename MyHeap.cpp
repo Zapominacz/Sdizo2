@@ -5,25 +5,32 @@
 
 MyHeap::MyHeap(void) {
 	baseArray = new int[0];
+	valueArray = new int[0];
 	size = 0;
 }
 
 MyHeap::~MyHeap(void) {
 	if(baseArray != NULL) {
 		delete[] baseArray;
+		delete[] valueArray;
 		baseArray = NULL;
 	}
 }
 
 int MyHeap::pop() {
 	if(size > 0) {
-		int result = baseArray[0];
+		int result = valueArray[0];
 		size--;
 		baseArray[0] = baseArray[size];
+		valueArray[0] = valueArray[size];
 		int* newBaseArray = new int[size];
+		int* newValueArray = new int[size];
 		memmove(newBaseArray, baseArray, size * sizeof(int));
+		memmove(newValueArray, valueArray, size * sizeof(int));
 		delete[] baseArray;
+		delete[] valueArray;
 		baseArray = newBaseArray;
+		valueArray = newValueArray;
 		fixHeapDown(0);
 		return result;
 	} else {
@@ -32,61 +39,48 @@ int MyHeap::pop() {
 	}
 }
 
-void MyHeap::push(int value) {
+void MyHeap::push(int key, int value) {
 	int* newBaseArray = new int[size + 1];
+	int* newValueArray = new int[size + 1];
 	memmove(newBaseArray, baseArray, size * sizeof(int));
 	delete[] baseArray;
 	baseArray = newBaseArray;
+	memmove(newValueArray, valueArray, size * sizeof(int));
+	delete[] valueArray;
+	valueArray = newValueArray;
 	int parentIndex = getParentIndex(size);
 	int childIndex = size;
 	size++;
-	while(parentIndex != -1 && baseArray[parentIndex] > value) {
+	while(parentIndex != -1 && baseArray[parentIndex] > key) {
 		baseArray[childIndex] = baseArray[parentIndex];
+		valueArray[childIndex] = valueArray[parentIndex];
 		childIndex = parentIndex;
 		parentIndex = getParentIndex(parentIndex);
 	}
-	baseArray[childIndex] = value;
+	baseArray[childIndex] = key;
+	valueArray[childIndex] = value;
 }
 
-int MyHeap::find(const int& value) {
+int MyHeap::getKey(const int& value) {
 	int savedSize = size;
 	while(size > 0) {
-		int tmp = baseArray[0];
-		if(tmp == value) {
-			int result = savedSize - size;
+		int key = baseArray[0];
+		int val = valueArray[0];
+		if(val == value) {
+			int result = baseArray[0];
 			size = savedSize;
 			fixHeapUp();
 			return result;
 		} else {
 			size--;
 			baseArray[0] = baseArray[size];
-			baseArray[size] = tmp;
+			baseArray[size] = key;
+			valueArray[0] = valueArray[size];
+			valueArray[size] = val;
 			fixHeapDown(0);
 		}
 	}
 	return -1; //nie znaleziono, napis wyciêto z powodu wydajnoœci cout
-}
-
-void  MyHeap::removeFirstOccurence(const int& value) {
-	int savedSize = size;
-	while(size > 0) {
-		int tmp = baseArray[0];
-		if(tmp == value) {
-			savedSize--;
-			int* newBase = new int[savedSize];
-			memmove(newBase, baseArray + 1, savedSize * sizeof(int));
-			delete[] baseArray;
-			baseArray = newBase;
-			size = savedSize;
-			fixHeapUp();
-			return;
-		} else {
-			size--;
-			baseArray[0] = baseArray[size];
-			baseArray[size] = tmp;
-			fixHeapDown(0);
-		}
-	}
 }
 
 int MyHeap::getParentIndex(int index) { 
@@ -100,18 +94,21 @@ int MyHeap::getParentIndex(int index) {
 void MyHeap::fixHeapDown(const unsigned int& index) {
 	unsigned int leftChildIndex = getLeftChildIndex(index);
 	unsigned int rightChildIndex = getRightChildIndex(index);
-	unsigned int maxValueIndex = index;
-	if(leftChildIndex < size && baseArray[maxValueIndex] > baseArray[leftChildIndex]) {
-		maxValueIndex = leftChildIndex;
+	unsigned int minValueIndex = index;
+	if(leftChildIndex < size && baseArray[minValueIndex] > baseArray[leftChildIndex]) {
+		minValueIndex = leftChildIndex;
 	}
-	if(rightChildIndex < size && baseArray[maxValueIndex] > baseArray[rightChildIndex]) {
-		maxValueIndex = rightChildIndex;
+	if(rightChildIndex < size && baseArray[minValueIndex] > baseArray[rightChildIndex]) {
+		minValueIndex = rightChildIndex;
 	}
-	if(maxValueIndex != index) {
+	if(minValueIndex != index) {
 		int temp = baseArray[index];
-		baseArray[index] = baseArray[maxValueIndex];
-		baseArray[maxValueIndex] = temp;
-		return fixHeapDown(maxValueIndex);
+		baseArray[index] = baseArray[minValueIndex];
+		baseArray[minValueIndex] = temp;
+		temp = valueArray[index];
+		valueArray[index] = valueArray[minValueIndex];
+		valueArray[minValueIndex] = temp;
+		return fixHeapDown(minValueIndex);
 	}
 }
 
@@ -121,44 +118,12 @@ void MyHeap::fixHeapUp(void) {
 	}
 }
 
-void MyHeap::heapSort(void) {
-	fixHeapUp();
-	int savedSize = size;
-	for(int i = 0; i < savedSize; i++) {
-		size--;
-		int highest = baseArray[0];
-		baseArray[0] = baseArray[size];
-		baseArray[size] = highest;
-		fixHeapDown(0);
+void MyHeap::setKey(int value, int key) {
+	for (int i = 0; i < size; i++) {
+		if (valueArray[i] == value) {
+			baseArray[i] = key;
+			fixHeapUp();
+			return;
+		}
 	}
-	size = savedSize;
 }
-
-void  MyHeap::addAll(int* src, int howMany) {
-	int* newBase = new int[size + howMany];
-	memmove(newBase, baseArray, size * sizeof(int));
-	memmove(newBase + size, src, howMany * sizeof(int));
-	size += howMany;
-	delete[] baseArray;
-	baseArray = newBase;
-	fixHeapUp();
-}
-
-void MyHeap::printStructure() {
-	int index = 0;
-	printElement(index);
-}
-
-void MyHeap::printElement(int index) {
-	if (index >= size) return;
-	printElement(getRightChildIndex(index));
-	int tmp = index;
-	while (tmp > 0) {
-		tmp--;
-		tmp /= 2;
-		std::cout << '\t';
-	}
-	std::cout << baseArray[index] << std::endl;
-	printElement(getLeftChildIndex(index));
-}
-

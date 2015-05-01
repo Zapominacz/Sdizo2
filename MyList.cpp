@@ -16,8 +16,6 @@ MyList::~MyList() {
 	}
 }
 
-
-
 /*Sprawdza, czy element jest bli¿ej lewego czy prawego koñca listy a nastêpnie iteruje*/
 MyList::ListElement *MyList::getElementAt(const unsigned int index) {
 	MyList::ListElement* element;
