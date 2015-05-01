@@ -39,7 +39,7 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	}
 	delete addedVertexList;
 	delete vertexList;
-	vertexList = new MyList<int>();
+	vertexList = new MyList();
 	for (int i = 1; i <= vertexCount; i++) {
 		for (int j = 1; j <= vertexCount; j++) {
 			vertexList->addAtEnd(j);

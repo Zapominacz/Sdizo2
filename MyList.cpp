@@ -2,15 +2,13 @@
 #include "stdafx.h"
 #include "MyList.h"
 
-template <class T>
-MyList<T>::MyList() {
+MyList::MyList() {
 	head = NULL;
 	tail = NULL;
 	size = 0;
 }
 
-template <class T>
-MyList<T>::~MyList() {
+MyList::~MyList() {
 	if(head != NULL) {
 		removeList();
 		head = NULL;
@@ -21,9 +19,8 @@ MyList<T>::~MyList() {
 
 
 /*Sprawdza, czy element jest bli¿ej lewego czy prawego koñca listy a nastêpnie iteruje*/
-template <class T>
-typename MyList<T>::ListElement *MyList<T>::getElementAt(const unsigned int index) {
-	MyList<T>::ListElement* element;
+MyList::ListElement *MyList::getElementAt(const unsigned int index) {
+	MyList::ListElement* element;
 	if(index < size) {
 		if(index > size / 2) {
 			element = tail;
@@ -42,9 +39,8 @@ typename MyList<T>::ListElement *MyList<T>::getElementAt(const unsigned int inde
 		return NULL;
 	}
 }
-template <class T>
 /* Osobne przypadki dla pierwszego elementu, koñca i pocz¹tku */
-void MyList<T>::add(const unsigned int index, const T value) {
+void MyList::add(const unsigned int index, const int value) {
 	if(index > size) {
 		std::cerr<<"Bad index!"<<std::endl;
 	} else {
@@ -72,15 +68,15 @@ void MyList<T>::add(const unsigned int index, const T value) {
 		size++;
 	}
 }
-template <class T>
-T MyList<T>::removeAt(const int index) {
+
+int MyList::removeAt(const int index) {
 	ListElement* element = getElementAt(index);
 	return remove(element);
 }
 
 /* Osobne przypadki dla ostatniego elementu, koñca i pocz¹tku */
-template <class T>
-T MyList<T>::remove(ListElement* element) {
+
+int MyList::remove(ListElement* element) {
 	int result = INT_MIN;
 	if(element != NULL) {
 		result = element->value;
@@ -108,8 +104,8 @@ T MyList<T>::remove(ListElement* element) {
 	return result;
 }
 
-template <class T>
-int MyList<T>::findFirstOccurence(const T& value) {
+
+int MyList::findFirstOccurence(const int& value) {
 	ListElement* element = head;
 	for(unsigned int i = 0; i < size; i++) {
 		if(element->value == value) {
@@ -119,8 +115,8 @@ int MyList<T>::findFirstOccurence(const T& value) {
 	}
 	return -1;
 }
-template <class T>
-void MyList<T>::removeList(void) {
+
+void MyList::removeList(void) {
 	ListElement* element = head;
 	while(element != NULL) {
 		ListElement* oldElement = element;
@@ -128,8 +124,8 @@ void MyList<T>::removeList(void) {
 		delete oldElement;
 	}
 }
-template <class T>
-int MyList<T>::removeFirstOccurence(const T& value) {
+
+int MyList::removeFirstOccurence(const int& value) {
 	ListElement* element = head;
 	for(unsigned int i = 0; i < size; i++) {
 		if(element->value == value) {
