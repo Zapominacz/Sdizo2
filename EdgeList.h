@@ -23,4 +23,7 @@ public:
 	~EdgeList();
 	void removeList(void);
 	void add(unsigned int, int);
+	bool exist(unsigned);
+	bool remove(unsigned);
+	int getWeight(unsigned);
 };

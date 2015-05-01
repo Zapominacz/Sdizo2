@@ -6,7 +6,7 @@
 class ListGraphRepresentation : public GraphRepresentationInterface {
 public:
 	ListGraphRepresentation(bool, unsigned int);
-	virtual ~ListGraphRepresentation() {}
+	virtual ~ListGraphRepresentation();
 	virtual bool insertEdge(unsigned int, unsigned int, int);
 	virtual void clear(void);
 	virtual bool deleteEdge(unsigned, unsigned);

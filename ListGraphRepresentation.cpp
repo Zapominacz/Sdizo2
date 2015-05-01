@@ -7,6 +7,11 @@ ListGraphRepresentation::ListGraphRepresentation(bool isDigraph, unsigned int ve
 	createLists();
 }
 
+ListGraphRepresentation::~ListGraphRepresentation() {
+	removeLists();
+}
+
+
 void ListGraphRepresentation::clear() {
 	removeLists();
 	createLists();
@@ -16,7 +21,7 @@ void ListGraphRepresentation::removeLists() {
 	for (int i = 0; i < vertexCount; i++) {
 		delete edgesList[i];
 	}
-	delete edgesList;
+	delete[] edgesList;
 	edgesList = NULL;
 }
 
@@ -34,6 +39,7 @@ bool ListGraphRepresentation::insertEdge(unsigned v, unsigned u, int weight) {
 		if (!isDiGraph) {
 			edgesList[u]->add(v, weight);
 		}
+		edgeCount++;
 	}
 	return exist;
 }
@@ -45,6 +51,7 @@ bool ListGraphRepresentation::deleteEdge(unsigned v, unsigned u) {
 		if (!isDiGraph) {
 			edgesList[u]->remove(v);
 		}
+		edgeCount--;
 	}
 	return exist;
 }

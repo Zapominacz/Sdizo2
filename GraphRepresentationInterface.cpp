@@ -90,15 +90,22 @@ void GraphRepresentationInterface::printListGraph() {
 void GraphRepresentationInterface::loadFromFile() {
 	using namespace std;
 	char patch[64];
-	int tmp;
+	int v;
 	cout << "sciezka: ";
 	cin >> patch;
 	fstream file(patch, std::ios_base::in);
-	while (file >> tmp) {
-		int u, weight, v = tmp;
+	int ec;
+	file >> ec;
+	file >> vertexCount;
+	clear();
+	while (file >> v) {
+		int u, weight;
 		file >> u;
 		file >> weight;
 		insertEdge(v, u, weight);
+	}
+	if (edgeCount != ec) {
+		cerr << "Cos nie tak" << endl;
 	}
 	file.close();
 }
