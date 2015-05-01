@@ -40,7 +40,7 @@ void MyHeap::push(int value) {
 	int parentIndex = getParentIndex(size);
 	int childIndex = size;
 	size++;
-	while(parentIndex != -1 && baseArray[parentIndex] < value) {
+	while(parentIndex != -1 && baseArray[parentIndex] > value) {
 		baseArray[childIndex] = baseArray[parentIndex];
 		childIndex = parentIndex;
 		parentIndex = getParentIndex(parentIndex);
@@ -101,10 +101,10 @@ void MyHeap::fixHeapDown(const unsigned int& index) {
 	unsigned int leftChildIndex = getLeftChildIndex(index);
 	unsigned int rightChildIndex = getRightChildIndex(index);
 	unsigned int maxValueIndex = index;
-	if(leftChildIndex < size && baseArray[maxValueIndex] < baseArray[leftChildIndex]) {
+	if(leftChildIndex < size && baseArray[maxValueIndex] > baseArray[leftChildIndex]) {
 		maxValueIndex = leftChildIndex;
 	}
-	if(rightChildIndex < size && baseArray[maxValueIndex] < baseArray[rightChildIndex]) {
+	if(rightChildIndex < size && baseArray[maxValueIndex] > baseArray[rightChildIndex]) {
 		maxValueIndex = rightChildIndex;
 	}
 	if(maxValueIndex != index) {

@@ -19,4 +19,5 @@ public:
 	virtual void loadFromFile(void);
 	virtual void printMatrixGraph(void);
 	virtual void generateGraph(const unsigned int, float, const int, const int);
+	unsigned getVertexCount(void) { return vertexCount;  }
 };

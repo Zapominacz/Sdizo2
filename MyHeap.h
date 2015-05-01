@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include <cmath>
-/*Kopiec typu max*/
+/*Kopiec typu min*/
 class MyHeap {
 private:
 	int* baseArray;
