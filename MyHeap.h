@@ -1,15 +1,15 @@
 #pragma once
 #include "stdafx.h"
-#include <cmath>
-/*Kopiec typu min*/
+
+/*Kopiec typu min z kluczem i wartoœci¹*/
 class MyHeap {
 private:
 	int* baseArray;
 	int* valueArray;
-	unsigned int size;
+	unsigned size;
 	int getParentIndex(int);
-	inline int getLeftChildIndex(int index) { return 2*index+1; }
-	inline int getRightChildIndex(int index) { return 2*index+2; }
+	int getLeftChildIndex(int index) { return 2*index+1; }
+	int getRightChildIndex(int index) { return 2*index+2; }
 	void fixHeapDown(const unsigned int&);
 public:
 	MyHeap(void);

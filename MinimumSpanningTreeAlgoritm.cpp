@@ -2,8 +2,6 @@
 #include "stdafx.h"
 #include "MinimumSpanningTreeAlgoritm.h"
 #include "UnionFind.h"
-#include "Edge.h"
-#include "EdgeStack.h"
 #include "MyArray.h"
 #include "MyHeap.h"
 
@@ -16,9 +14,7 @@ MinimumSpanningTreeAlgoritm::MinimumSpanningTreeAlgoritm(GraphRepresentationInte
 }
 
 MinimumSpanningTreeAlgoritm::~MinimumSpanningTreeAlgoritm() {
-	if (graph != NULL) {
-		delete graph;
-	}
+	graph = NULL;
 }
 
 void MinimumSpanningTreeAlgoritm::loadGraph(GraphRepresentationInterface* graph) {
@@ -34,9 +30,9 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 	}
 	while (heap->getSize() > 0) {
 		int u = heap->pop();
-		EdgeStack *adjList = graph->getAdjFor(u);
-		for (unsigned i = 0; i < adjList->getSize(); i++) {
-			Edge e = adjList->pop();
+		EdgeStack adjList = graph->getAdjFor(u);
+		for (unsigned i = 0; i < adjList.getSize(); i++) {
+			Edge e = adjList.pop();
 			int v = e.v2;
 			int weight = e.weight;
 			if (base->vertexDegree(v) == 0) {

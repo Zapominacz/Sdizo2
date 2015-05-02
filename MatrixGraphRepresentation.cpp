@@ -13,16 +13,16 @@ MatrixGraphRepresentation::~MatrixGraphRepresentation() {
 
 void MatrixGraphRepresentation::createMatrix() {
 	matrix = new int*[vertexCount];
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		matrix[i] = new int[vertexCount];
-		for (int j = 0; j < vertexCount; j++) {
+		for (unsigned j = 0; j < vertexCount; j++) {
 			matrix[i][j] = -1;
 		}
 	}
 }
 
 void MatrixGraphRepresentation::deleteMatrix() {
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		delete[] matrix[i];
 	}
 	delete[] matrix;
@@ -35,8 +35,8 @@ void MatrixGraphRepresentation::clear(unsigned vc) {
 		vertexCount = vc;
 		createMatrix();
 	}
-	for (int i = 0; i < vertexCount; i++) {
-		for (int j = 0; j < vertexCount; j++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
+		for (unsigned j = 0; j < vertexCount; j++) {
 			matrix[i][j] = -1;
 		}
 	}
@@ -65,7 +65,7 @@ bool MatrixGraphRepresentation::deleteEdge(unsigned v, unsigned u) {
 
 unsigned MatrixGraphRepresentation::vertexDegree(unsigned vertex) {
 	int result = 0;
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		if (exist(vertex, i)) {
 			result++;
 		}
@@ -77,11 +77,11 @@ int MatrixGraphRepresentation::searchEdge(unsigned v, unsigned u) {
 	return matrix[v][u];
 }
 
-EdgeStack* MatrixGraphRepresentation::getAdjFor(unsigned v) {
-	EdgeStack *result = new EdgeStack();
-	for (int i = 0; i < vertexCount; i++) {
+EdgeStack MatrixGraphRepresentation::getAdjFor(unsigned v) {
+	EdgeStack result = EdgeStack();
+	for (unsigned i = 0; i < vertexCount; i++) {
 		if (matrix[v][i] > -1) {
-			result->push(Edge(v, i, matrix[v][i]));
+			result.push(Edge(v, i, matrix[v][i]));
 		}
 	}
 	return result;

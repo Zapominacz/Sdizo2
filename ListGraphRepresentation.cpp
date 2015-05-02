@@ -19,7 +19,7 @@ void ListGraphRepresentation::clear(unsigned vc) {
 }
 
 void ListGraphRepresentation::removeLists() {
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		delete edgesList[i];
 	}
 	delete[] edgesList;
@@ -28,7 +28,7 @@ void ListGraphRepresentation::removeLists() {
 
 void ListGraphRepresentation::createLists() {
 	edgesList = new EdgeList*[vertexCount];
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		edgesList[i] = new EdgeList(i);
 	}
 }
@@ -65,12 +65,12 @@ int ListGraphRepresentation::searchEdge(unsigned v, unsigned u) {
 	return edgesList[v]->getVal(u).weight;
 }
 
-EdgeStack* ListGraphRepresentation::getAdjFor(unsigned v) {
-	EdgeStack *result = new EdgeStack();
-	EdgeList *tmp = new EdgeList(edgesList[v]);
-	for (int i = 0; i < tmp->getSize(); i++) {
-		Edge e = tmp->pop(0);
-		result->push(e);
+EdgeStack ListGraphRepresentation::getAdjFor(unsigned v) {
+	EdgeStack result = EdgeStack();
+	EdgeList tmp = EdgeList(edgesList[v]);
+	for (unsigned i = 0; i < tmp.getSize(); i++) {
+		Edge e = tmp.pop(0);
+		result.push(e);
 	}
 	return result;
 }

@@ -1,5 +1,4 @@
 #include "stdafx.h"
-#include <iostream>
 #include "MatrixGraphRepresentation.h"
 #include "ListGraphRepresentation.h"
 #include "MinimumSpanningTreeAlgoritm.h"
@@ -9,8 +8,8 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	using namespace std;
 	char ch;
 	bool isDigraph = false;
-	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(true, 1);
-	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(true, 1);
+	GraphRepresentationInterface *graph = new MatrixGraphRepresentation(true, 1);
+	GraphRepresentationInterface *graph2 = new MatrixGraphRepresentation(true, 1);
 	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
 	ShortestWayAlgoritm *sw = new ShortestWayAlgoritm(graph, 0);
 	do {
@@ -59,6 +58,10 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			break;
 		}
 	} while (ch != 'q');
+	delete graph;
+	delete graph2;
+	delete mst;
+	delete sw;
 	return 0;
 }
 

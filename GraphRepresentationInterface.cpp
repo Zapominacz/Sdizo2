@@ -22,7 +22,7 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 
 	MyList* vertexList = new MyList();
 	MyList* addedVertexList = new MyList();
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		vertexList->addAtEnd(i);
 	}
 	std::uniform_int_distribution<int> distr(0, vertexList->getSize() - 1);
@@ -42,12 +42,12 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	delete addedVertexList;
 	delete vertexList;
 	EdgeList *el = new EdgeList();
-	int jdelim = vertexCount;
-	for (int i = 0; i < vertexCount; i++) {
+	unsigned jdelim = vertexCount;
+	for (unsigned i = 0; i < vertexCount; i++) {
 		if (!isDiGraph) {
 			jdelim = i;
 		}
-		for (int j = 0; j < jdelim; j++) {
+		for (unsigned j = 0; j < jdelim; j++) {
 			el->add(Edge(i, j, weightDistr(generator)));
 		}
 	}
@@ -64,8 +64,8 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 
 void GraphRepresentationInterface::printMatrixGraph() {
 	using namespace std;
-	for (int i = 0; i < vertexCount; i++) {
-		for (int j = 0; j < vertexCount; j++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
+		for (unsigned j = 0; j < vertexCount; j++) {
 			cout << setw(3);
 			cout << searchEdge(i,j) << "  ";
 		}
@@ -75,9 +75,9 @@ void GraphRepresentationInterface::printMatrixGraph() {
 
 void GraphRepresentationInterface::printListGraph() {
 	using namespace std;
-	for (int i = 0; i < vertexCount; i++) {
+	for (unsigned i = 0; i < vertexCount; i++) {
 		cout << i << ": ";
-		for (int j = 0; j < vertexCount; j++) {
+		for (unsigned j = 0; j < vertexCount; j++) {
 			int weight = searchEdge(i, j);
 			if (weight >= 0) {
 				cout << j << "(" << weight << "), ";

@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 #include "ShortestWayAlgoritm.h"
 #include "MyHeap.h"
@@ -17,29 +18,29 @@ ShortestWayAlgoritm::~ShortestWayAlgoritm() {
 }
 
 GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentationInterface* base) {
-	const int INF = 10000;
+	int INF = 10000;
 	base->clear(graph->getVertexCount());
-	MyHeap *heap = new MyHeap();
-	heap->push(startVertex, 0);
+	MyHeap heap = MyHeap();
+	heap.push(startVertex, 0);
 	for (unsigned i = 0; i < base->getVertexCount(); i++) {
-		if (i = startVertex) {
+		if (i == startVertex) {
 			continue;
 		} else {
-			heap->push(INF, i);
+			heap.push(INF, i);
 		}
 	}
-	while (heap->getSize() > 0) {
-		int w = heap->seekKey();
-		int u = heap->pop();
-		EdgeStack *adjList = graph->getAdjFor(u);
-		for (unsigned i = 0; i < adjList->getSize(); i++) {
-			Edge tmp = adjList->pop();
+	while (heap.getSize() > 0) {
+		int key = heap.seekKey();
+		int u = heap.pop();
+		EdgeStack adjList = graph->getAdjFor(u);
+		for (unsigned i = 0; i < adjList.getSize(); i++) {
+			Edge tmp = adjList.pop();
 			int v = tmp.v2;
-			int d = tmp.weight;
+			int weight = tmp.weight;
 			if (base->vertexDegree(v) == 0) {
-				if (w + d < heap->getKey(v)) {
-					heap->setKey(v, w + d);
-					base->insertEdge(u, v, d);
+				if (key + weight < heap.getKey(v)) {
+					heap.setKey(v, key + weight);
+					base->insertEdge(u, v, weight);
 				}
 			}
 		}
@@ -48,7 +49,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 }
 
 GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentationInterface* base) {
-	const int INF = 10000;
+	int INF = 10000;
 	unsigned vCount = graph->getVertexCount();
 	base->clear(vCount);
 	int *vWeights = new int[vCount];
@@ -67,6 +68,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 			}
 		}
 	}
+	//delete[] vWeights; TODO error
 	return base;
 }
 
