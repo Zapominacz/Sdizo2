@@ -9,10 +9,10 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	using namespace std;
 	char ch;
 	bool isDigraph = false;
-	GraphRepresentationInterface *graph = new MatrixGraphRepresentation(true, 1);
-	GraphRepresentationInterface *graph2 = new MatrixGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(true, 1);
 	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
-	ShortestWayAlgoritm *sw = NULL;
+	ShortestWayAlgoritm *sw = new ShortestWayAlgoritm(graph, 0);
 	do {
 		cin >> ch;
 		switch (ch) {
@@ -21,8 +21,11 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			graph2->printMatrixGraph();
 			break;
 		case 'd':
-			sw = new ShortestWayAlgoritm(graph);
 			graph2 = sw->makeDikstra(graph2);
+			graph2->printMatrixGraph();
+			break;
+		case 'b':
+			graph2 = sw->makeBellman(graph2);
 			graph2->printMatrixGraph();
 			delete sw;
 			break;
@@ -31,7 +34,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			graph2->printMatrixGraph();
 			break;
 		case 'g':
-			graph->generateGraph(4, 0.99, 1, 50);
+			graph->generateGraph(4, 0.99f, 1, 50);
 			break;
 		case 'z':
 			graph->loadFromFile();
@@ -44,23 +47,18 @@ int _tmain(int argc, _TCHAR* argv[]) {
 			break;
 		case 'i':
 			isDigraph = !isDigraph;
-			cout << "digraf: " << isDigraph << endl;
+			cout << "isDigraf: " << isDigraph << endl;
 			break;
 		case '[':
 			delete graph;
-			graph = new MatrixGraphRepresentation(isDigraph, 0);
+			graph = new MatrixGraphRepresentation(isDigraph, 1);
 			break;
 		case ']':
 			delete graph;
-			graph = new MatrixGraphRepresentation(isDigraph, 0);
+			graph = new ListGraphRepresentation(isDigraph, 1);
 			break;
 		}
 	} while (ch != 'q');
-	delete graph;
-	delete graph2;
-	if (mst != NULL) {
-		delete mst;
-	}
 	return 0;
 }
 

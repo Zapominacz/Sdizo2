@@ -7,8 +7,9 @@ ShortestWayAlgoritm::ShortestWayAlgoritm() {
 	loadGraph(NULL);
 }
 
-ShortestWayAlgoritm::ShortestWayAlgoritm(GraphRepresentationInterface* graph) {
+ShortestWayAlgoritm::ShortestWayAlgoritm(GraphRepresentationInterface* graph, unsigned v) {
 	loadGraph(graph);
+	setStartVertex(v);
 }
 
 ShortestWayAlgoritm::~ShortestWayAlgoritm() {
@@ -19,9 +20,13 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	const int INF = 10000;
 	base->clear(graph->getVertexCount());
 	MyHeap *heap = new MyHeap();
-	heap->push(0, 0);
-	for (unsigned i = 1; i < base->getVertexCount(); i++) {
-		heap->push(INF, i);
+	heap->push(startVertex, 0);
+	for (unsigned i = 0; i < base->getVertexCount(); i++) {
+		if (i = startVertex) {
+			continue;
+		} else {
+			heap->push(INF, i);
+		}
 	}
 	while (heap->getSize() > 0) {
 		int w = heap->seekKey();
@@ -44,7 +49,24 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 
 GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentationInterface* base) {
 	const int INF = 10000;
-
+	unsigned vCount = graph->getVertexCount();
+	base->clear(vCount);
+	int *vWeights = new int[vCount];
+	for (unsigned i = 0; i < vCount; i++) {
+		vWeights[i] = INF;
+	}
+	vWeights[startVertex] = 0;
+	for (unsigned i = 0; i < vCount; i++) {
+		for (unsigned j = 0; j < graph->getEdgeCount(); j++) {
+			int w = graph->searchEdge(i, j);
+			if (w > -1) {
+				if (vWeights[i] < INF && vWeights[i] + w < vWeights[j]) {
+					vWeights[j] = vWeights[i] + w;
+					base->insertEdge(i, j, w);
+				}
+			}
+		}
+	}
 	return base;
 }
 

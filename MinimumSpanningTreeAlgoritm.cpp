@@ -55,7 +55,7 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makeKruskalMst(GraphR
 	UnionFind *unionFind = new UnionFind(graph->getVertexCount());
 	EdgeStack *edges = new EdgeStack();
 	for (unsigned i = 0; i < graph->getVertexCount(); i++) {
-		for (int j = 0; j < i; j++) {
+		for (unsigned j = 0; j < i; j++) {
 			int weight = graph->searchEdge(i, j);
 			if (weight > -1) {
 				edges->push(Edge(i, j, weight));
