@@ -3,88 +3,40 @@
 
 UnionFind::UnionFind(unsigned vCount) {
 	vertexCount = vCount;
-	subtrees = vCount;
-	
-	head = new Subtree();
-	head->index = 0;
-	head->parent = NULL;
-	head->rank = 0;
-	Subtree *tmp = head;
-	for (unsigned int i = 1; i < vertexCount; i++) {
-		tmp->nextSubtree = new Subtree();
-		tmp->nextSubtree->index = i;
-		tmp->nextSubtree->rank = 0;
-		tmp->nextSubtree->parent = NULL;
-		tmp = tmp->nextSubtree;
+	baseArray = new Subtree*[vCount];
+	for (unsigned int i = 0; i < vertexCount; i++) {
+		baseArray[i] = new Subtree();
+		baseArray[i]->vertex = i;
+		baseArray[i]->parent = NULL;
 	}
 }
-
 
 UnionFind::~UnionFind() {
-	while (head != NULL) {
-		Subtree *tmp = head;
-		head = head->nextSubtree;
-		delete tmp;
+	for (int i = 0; i < vertexCount; i++) {
+		delete baseArray[i];
 	}
+	delete[] baseArray;
 }
 
-unsigned UnionFind::findSubtree(unsigned elementId) {
-	
-	Subtree* currSubtree = getAt(elementId);
-	Subtree* tmp = currSubtree;
-
-	while (currSubtree->parent != NULL) {
+unsigned UnionFind::findSubtree(unsigned v) {
+	Subtree* currSubtree = baseArray[v];
+	Subtree* prev = NULL;
+	while (currSubtree != NULL) {
+		prev = currSubtree;
 		currSubtree = currSubtree->parent;
 	}
-	Subtree* root = currSubtree;
-	currSubtree = tmp;
-	while (currSubtree != root)
-	{
-		Subtree* next = currSubtree->parent;
-		currSubtree->parent = root;
-		currSubtree = next;
-	}
-
-	return root->index;
+	return prev->vertex;
 }
 
 bool UnionFind::isNotTheSameUnion(unsigned u, unsigned v) {
 	return findSubtree(u) != findSubtree(v);
 }
 
-void UnionFind::merge(unsigned s1, unsigned s2) {
-	if (s1 == s2) {
+void UnionFind::merge(unsigned v, unsigned u) {
+	if (v == u) {
 		return;
 	}
-
-	Subtree* set1 = getAt(s1);
-	Subtree* set2 = getAt(s2);
-
-	// Determine which node representing a set has a higher rank. The node with the higher rank is
-	// likely to have a bigger subtree so in order to better balance the tree representing the
-	// union, the node with the higher rank is made the parent of the one with the lower rank and
-	// not the other way around.
-	if (set1->rank > set2->rank)
-		set2->parent = set1;
-	else if (set1->rank < set2->rank)
-		set1->parent = set2;
-	else // set1->rank == set2->rank
-	{
-		set2->parent = set1;
-		++set1->rank; // update rank
-	}
-
-	// Since two sets have fused into one, there is now one less set so update the set count.
-	--subtrees;
-}
-
-UnionFind::Subtree* UnionFind::getAt(unsigned index) {
-	Subtree* currSubtree = head;
-	for (unsigned int i = 0; i < index; i++) {
-		if (currSubtree == NULL) {
-			return NULL;
-		}
-		currSubtree = currSubtree->nextSubtree;
-	}
-	return currSubtree;
+	unsigned subtree1 = findSubtree(v);
+	unsigned subtree2 = findSubtree(u);
+	baseArray[subtree1]->parent = baseArray[subtree2];
 }

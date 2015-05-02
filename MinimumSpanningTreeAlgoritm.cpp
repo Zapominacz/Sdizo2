@@ -62,6 +62,7 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 	}
 	delete[] addedVertexes;
 	delete[] x;
+	delete[] w;
 	delete heap;
 	return base;
 }
