@@ -8,8 +8,8 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	using namespace std;
 	char ch;
 	bool isDigraph = false;
-	GraphRepresentationInterface *graph = new ListGraphRepresentation(true, 1);
-	GraphRepresentationInterface *graph2 = new ListGraphRepresentation(true, 1);
+	GraphRepresentationInterface *graph = new ListGraphRepresentation(false, 1);
+	GraphRepresentationInterface *graph2 = new ListGraphRepresentation(false, 1);
 	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
 	ShortestWayAlgoritm *sw = new ShortestWayAlgoritm(graph, 0);
 	do {
