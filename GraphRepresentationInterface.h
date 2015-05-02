@@ -1,7 +1,8 @@
 #pragma once
 #include "stdafx.h"
-#include "EdgeStack.h"
 #include "EdgeList.h"
+#include "EdgeStack.h"
+
 class GraphRepresentationInterface {
 protected:
 	unsigned int vertexCount;

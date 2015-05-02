@@ -111,10 +111,3 @@ void GraphRepresentationInterface::loadFromFile() {
 	}
 	file.close();
 }
-
-
-EdgeStack* GraphRepresentationInterface::getAdjFor(unsigned v) {
-	EdgeStack *result = new EdgeStack();
-	result->makeStack(this, v);
-	return result;
-}

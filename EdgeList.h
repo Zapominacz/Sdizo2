@@ -34,4 +34,5 @@ public:
 	bool exist(unsigned);
 	bool remove(unsigned);
 	Edge getVal(unsigned);
+	Edge getAt(unsigned);
 };

@@ -10,7 +10,7 @@ UnionFind::UnionFind(unsigned vCount) {
 	head->parent = NULL;
 	head->rank = 0;
 	Subtree *tmp = head;
-	for (unsigned int i = 0; i < vertexCount; i++) {
+	for (unsigned int i = 1; i < vertexCount; i++) {
 		tmp->nextSubtree = new Subtree();
 		tmp->nextSubtree->index = i;
 		tmp->nextSubtree->rank = 0;
@@ -81,7 +81,7 @@ void UnionFind::merge(unsigned s1, unsigned s2) {
 UnionFind::Subtree* UnionFind::getAt(unsigned index) {
 	Subtree* currSubtree = head;
 	for (unsigned int i = 0; i < index; i++) {
-		if (currSubtree = NULL) {
+		if (currSubtree == NULL) {
 			return NULL;
 		}
 		currSubtree = currSubtree->nextSubtree;

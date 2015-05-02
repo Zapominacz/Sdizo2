@@ -35,7 +35,7 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 	while (heap->getSize() > 0) {
 		int u = heap->pop();
 		EdgeStack *adjList = graph->getAdjFor(u);
-		for (int i = 0; i < graph->vertexDegree(u); i++) {
+		for (int i = 0; i < adjList->getSize(); i++) {
 			int v = adjList->pop().v2;
 			if (base->vertexDegree(v) == 0) {
 				int weight = graph->searchEdge(v, u);
@@ -52,7 +52,15 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makeKruskalMst(GraphRepresentationInterface* base) {
 	base->clear(graph->getVertexCount());
 	UnionFind *unionFind = new UnionFind(graph->getVertexCount());
-	EdgeStack *edges = new EdgeStack(graph);
+	EdgeStack *edges = new EdgeStack();
+	for (int i = 0; i < graph->getVertexCount(); i++) {
+		for (int j = 0; j < i; j++) {
+			int weight = graph->searchEdge(i, j);
+			if (weight > -1) {
+				edges->push(Edge(i, j, weight));
+			}
+		}
+	}
 	for(int i = 0; i < graph->getEdgeCount(); i++) {
 		Edge edge = edges->pop();
 		if (unionFind->isNotTheSameUnion(edge.v1, edge.v2)) {
