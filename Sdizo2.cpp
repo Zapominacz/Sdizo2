@@ -8,8 +8,8 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	using namespace std;
 	char ch;
 	bool isDigraph = false;
-	GraphRepresentationInterface *graph = new ListGraphRepresentation(false, 1);
-	GraphRepresentationInterface *graph2 = new ListGraphRepresentation(false, 1);
+	GraphRepresentationInterface *graph = new MatrixGraphRepresentation(false, 1);
+	GraphRepresentationInterface *graph2 = new MatrixGraphRepresentation(false, 1);
 	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
 	ShortestWayAlgoritm *sw = new ShortestWayAlgoritm(graph, 0);
 	do {
@@ -17,20 +17,20 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		switch (ch) {
 		case 'k':
 			graph2 = mst->makeKruskalMst(graph2);
-			graph2->printMatrixGraph();
+			graph2->printListGraph();
 			break;
 		case 'd':
 			graph2 = sw->makeDikstra(graph2);
-			graph2->printMatrixGraph();
+			graph2->printListGraph();
 			break;
 		case 'b':
 			graph2 = sw->makeBellman(graph2);
-			graph2->printMatrixGraph();
+			graph2->printListGraph();
 			delete sw;
 			break;
 		case 'p':
 			graph2 = mst->makePrimMst(graph2);
-			graph2->printMatrixGraph();
+			graph2->printListGraph();
 			break;
 		case 'g':
 			graph->generateGraph(4, 0.99f, 1, 50);

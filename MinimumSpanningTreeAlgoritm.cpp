@@ -22,29 +22,46 @@ void MinimumSpanningTreeAlgoritm::loadGraph(GraphRepresentationInterface* graph)
 }
 
 GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepresentationInterface* base) {
-	base->clear(graph->getVertexCount());
+	const int INF = 100000;
+	int vCount = graph->getVertexCount();
+	base->clear(vCount);
 	MyHeap *heap = new MyHeap();
+	bool *addedVertexes = new bool[vCount];
+	int *x = new int[vCount];
+	int *w = new int[vCount];
+	x[0] = -2;
 	heap->push(0, 0);
-	for (unsigned i = 1; i < base->getVertexCount(); i++) {
-		heap->push(10000, i);
+	for (unsigned i = 1; i < vCount; i++) {
+		heap->push(INF, i);
+		addedVertexes[i] = false;
 	}
 	while (heap->getSize() > 0) {
 		int u = heap->pop();
+		addedVertexes[u] = true;
 		EdgeStack *adjList = graph->getAdjFor(u);
-		for (unsigned i = 0; i < adjList->getSize(); i++) {
+		int eSize = adjList->getSize();
+		for (unsigned i = 0; i < eSize; i++) {
 			Edge *e = adjList->pop();
 			int v = e->v2;
 			int weight = e->weight;
-			if (base->vertexDegree(v) == 0) {
+			if (!addedVertexes[v]) {
 				if (weight < heap->getKey(v)) {
 					heap->setKey(v, weight);
-					base->insertEdge(u, v, weight);
+					x[v] = u;
+					w[v] = weight;
 				}
 			}
 			delete e;
 		}
 		delete adjList;
 	}
+	for (int i = 0; i < vCount; i++) {
+		if (x[i] != -2) {
+			base->insertEdge(i, x[i], w[i]);
+		}
+	}
+	delete[] addedVertexes;
+	delete[] x;
 	delete heap;
 	return base;
 }
