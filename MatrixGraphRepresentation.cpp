@@ -4,16 +4,24 @@
 
 MatrixGraphRepresentation::MatrixGraphRepresentation(bool isDigraph, unsigned int vertexCount)
 	: GraphRepresentationInterface(isDigraph, vertexCount) {
+	createMatrix();
+}
+
+MatrixGraphRepresentation::~MatrixGraphRepresentation() {
+	deleteMatrix();
+}
+
+void MatrixGraphRepresentation::createMatrix() {
 	matrix = new int*[vertexCount];
 	for (int i = 0; i < vertexCount; i++) {
-		matrix[i] = new int [vertexCount];
+		matrix[i] = new int[vertexCount];
 		for (int j = 0; j < vertexCount; j++) {
 			matrix[i][j] = -1;
 		}
 	}
 }
 
-MatrixGraphRepresentation::~MatrixGraphRepresentation() {
+void MatrixGraphRepresentation::deleteMatrix() {
 	for (int i = 0; i < vertexCount; i++) {
 		delete[] matrix[i];
 	}
@@ -21,7 +29,12 @@ MatrixGraphRepresentation::~MatrixGraphRepresentation() {
 	matrix = NULL;
 }
 
-void MatrixGraphRepresentation::clear() {
+void MatrixGraphRepresentation::clear(unsigned vc) {
+	if (vc != vertexCount) {
+		deleteMatrix();
+		vertexCount = vc;
+		createMatrix();
+	}
 	for (int i = 0; i < vertexCount; i++) {
 		for (int j = 0; j < vertexCount; j++) {
 			matrix[i][j] = -1;

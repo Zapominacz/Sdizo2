@@ -7,7 +7,9 @@ public:
 	MatrixGraphRepresentation(bool, unsigned int);
 	virtual ~MatrixGraphRepresentation();
 	virtual bool insertEdge(unsigned int, unsigned int, int);
-	virtual void clear(void);
+	virtual void clear(unsigned);
+	void createMatrix(void);
+	void deleteMatrix(void);
 	virtual bool deleteEdge(unsigned, unsigned);
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);

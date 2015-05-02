@@ -7,7 +7,7 @@ public:
 	ListGraphRepresentation(bool, unsigned int);
 	virtual ~ListGraphRepresentation();
 	virtual bool insertEdge(unsigned int, unsigned int, int);
-	virtual void clear(void);
+	virtual void clear(unsigned);
 	virtual bool deleteEdge(unsigned, unsigned);
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);

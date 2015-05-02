@@ -11,7 +11,7 @@ public:
 	GraphRepresentationInterface(bool, unsigned int);
 	virtual ~GraphRepresentationInterface() {}
 	virtual bool insertEdge(unsigned int, unsigned int, int) = 0;
-	virtual void clear(void) = 0;
+	virtual void clear(unsigned) = 0;
 	virtual bool deleteEdge(unsigned, unsigned) = 0;
 	virtual unsigned vertexDegree(unsigned) = 0;
 	virtual int searchEdge(unsigned, unsigned) = 0;
@@ -21,4 +21,5 @@ public:
 	virtual void printMatrixGraph(void);
 	virtual void generateGraph(const unsigned int, float, const int, const int);
 	unsigned getVertexCount(void) { return vertexCount;  }
+	unsigned getEdgeCount(void) { return edgeCount; }
 };

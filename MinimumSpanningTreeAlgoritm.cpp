@@ -3,12 +3,12 @@
 #include "MinimumSpanningTreeAlgoritm.h"
 #include "UnionFind.h"
 #include "Edge.h"
-#include "EdgeQueue.h"
+#include "EdgeStack.h"
 #include "MyArray.h"
 #include "MyHeap.h"
 
 GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepresentationInterface* base) {
-	base->clear();
+	base->clear(graph->getVertexCount());
 	MyHeap *heap = new MyHeap();
 	heap->push(0, 0);
 	for (int i = 1; i < graph->getVertexCount(); i++) {
@@ -32,11 +32,11 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 }
 
 GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makeKruskalMst(GraphRepresentationInterface* base) {
-	base->clear();
+	base->clear(graph->getVertexCount());
 	UnionFind *unionFind = new UnionFind(graph->getVertexCount());
-	EdgeQueue *edges = new EdgeQueue(graph);
-	for (int i = 0; i < edges->getSize(); i++) {
-		Edge edge = edges->getMin(i);
+	EdgeStack *edges = new EdgeStack(graph);
+	for(int i = 0; i < graph->getEdgeCount(); i++) {
+		Edge edge = edges->pop();
 		if (unionFind->isNotTheSameUnion(edge.v1, edge.v2)) {
 			base->insertEdge(edge.v1, edge.v2, edge.weight);
 			unionFind->merge(edge.v1, edge.v2);

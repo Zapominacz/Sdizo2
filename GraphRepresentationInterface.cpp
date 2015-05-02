@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "GraphRepresentationInterface.h"
 #include <fstream>
+#include <iomanip>
 #include "MyList.h"
 
 GraphRepresentationInterface::GraphRepresentationInterface(bool isDigraph, unsigned int vCount) {
@@ -12,7 +13,7 @@ GraphRepresentationInterface::GraphRepresentationInterface(bool isDigraph, unsig
 
 void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	float density, const int weightFrom, const int weightTo) {
-	clear();
+	clear(vertexCount);
 	int edgesToGenerate = (int)(density * vertexCount * (vertexCount - 1)) / 2;
 	int spanningEdge = vertexCount - 1;
 	std::random_device rand_dev;
@@ -67,6 +68,7 @@ void GraphRepresentationInterface::printMatrixGraph() {
 	using namespace std;
 	for (int i = 0; i < vertexCount; i++) {
 		for (int j = 0; j < vertexCount; j++) {
+			cout << setw(3);
 			cout << searchEdge(i,j) << "  ";
 		}
 		cout << endl;
@@ -91,13 +93,15 @@ void GraphRepresentationInterface::loadFromFile() {
 	using namespace std;
 	char patch[64];
 	int v;
+	int vc;
 	cout << "sciezka: ";
 	cin >> patch;
 	fstream file(patch, std::ios_base::in);
 	int ec;
+	
 	file >> ec;
-	file >> vertexCount;
-	clear();
+	file >> vc;
+	clear(vc);
 	while (file >> v) {
 		int u, weight;
 		file >> u;

@@ -12,8 +12,9 @@ ListGraphRepresentation::~ListGraphRepresentation() {
 }
 
 
-void ListGraphRepresentation::clear() {
+void ListGraphRepresentation::clear(unsigned vc) {
 	removeLists();
+	vertexCount = vc;
 	createLists();
 }
 
