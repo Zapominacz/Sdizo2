@@ -7,23 +7,41 @@
 #include "MyArray.h"
 #include "MyHeap.h"
 
+MinimumSpanningTreeAlgoritm::MinimumSpanningTreeAlgoritm() {
+	loadGraph(NULL);
+}
+
+MinimumSpanningTreeAlgoritm::MinimumSpanningTreeAlgoritm(GraphRepresentationInterface* graph) {
+	loadGraph(graph);
+}
+
+MinimumSpanningTreeAlgoritm::~MinimumSpanningTreeAlgoritm() {
+	if (graph != NULL) {
+		delete graph;
+	}
+}
+
+void MinimumSpanningTreeAlgoritm::loadGraph(GraphRepresentationInterface* graph) {
+	this->graph = graph;
+}
+
 GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepresentationInterface* base) {
 	base->clear(graph->getVertexCount());
 	MyHeap *heap = new MyHeap();
 	heap->push(0, 0);
-	for (int i = 1; i < graph->getVertexCount(); i++) {
+	for (int i = 1; i < base->getVertexCount(); i++) {
 		heap->push(10000, i);
 	}
 	while (heap->getSize() > 0) {
 		int u = heap->pop();
-		EdgeList *adjList = graph->getAdjFor(u);
+		EdgeStack *adjList = graph->getAdjFor(u);
 		for (int i = 0; i < graph->vertexDegree(u); i++) {
-			int v = adjList->getVal(i).v2;
-			if (graph->vertexDegree(v) == 0) {
+			int v = adjList->pop().v2;
+			if (base->vertexDegree(v) == 0) {
 				int weight = graph->searchEdge(v, u);
 				if (weight < heap->getKey(v)) {
 					heap->setKey(v, weight);
-					graph->insertEdge(u, v, weight);
+					base->insertEdge(u, v, weight);
 				}
 			}
 		}

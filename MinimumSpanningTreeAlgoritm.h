@@ -4,6 +4,7 @@
 
 class MinimumSpanningTreeAlgoritm {
 public:
+	MinimumSpanningTreeAlgoritm();
 	MinimumSpanningTreeAlgoritm(GraphRepresentationInterface* graph);
 	~MinimumSpanningTreeAlgoritm();
 	GraphRepresentationInterface* makePrimMst(GraphRepresentationInterface*);

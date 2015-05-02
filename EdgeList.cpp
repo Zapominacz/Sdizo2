@@ -32,11 +32,29 @@ void EdgeList::add(unsigned int vertex, int weight) {
 	EdgeNode *tmp = head;
 	EdgeNode *prev = NULL;
 	while (tmp != NULL) {
+		prev = tmp;
 		tmp = tmp->next;
 	}
 	if (prev == NULL) {
 		head = newNode;
 	} else {
+		prev->next = newNode;
+	}
+	size++;
+}
+
+void EdgeList::add(Edge edge) {
+	EdgeNode *newNode = new EdgeNode(edge);
+	EdgeNode *tmp = head;
+	EdgeNode *prev = NULL;
+	while (tmp != NULL) {
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (prev == NULL) {
+		head = newNode;
+	}
+	else {
 		prev->next = newNode;
 	}
 	size++;
@@ -61,8 +79,8 @@ bool EdgeList::remove(unsigned vertex) {
 	EdgeNode *prev = NULL;
 	while (tmp != NULL) {
 		if (tmp->value.v2 != vertex) {
-			tmp = tmp->next;
 			prev = tmp;
+			tmp = tmp->next;
 		} else {
 			result = true;
 			if (prev == NULL) {
@@ -71,9 +89,31 @@ bool EdgeList::remove(unsigned vertex) {
 				prev->next = tmp->next;
 			}
 			delete tmp;
+			size--;
 			break;
 		}
 	}
+	return result;
+}
+
+Edge EdgeList::pop(unsigned pos) {
+	EdgeNode *tmp = head;
+	EdgeNode *prev = NULL;
+	if (pos >= size) {
+		return Edge(0, 0, -2);
+	}
+	for (int i = 0; i < pos; i++) {
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	if (prev != NULL) {
+	prev->next = tmp->next;
+	} else {
+		head = tmp->next;
+	}
+	size--;
+	Edge result = tmp->value;
+	delete tmp;
 	return result;
 }
 

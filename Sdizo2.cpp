@@ -8,19 +8,22 @@ int _tmain(int argc, _TCHAR* argv[]) {
 	using namespace std;
 	char ch;
 	bool isDigraph = false;
-	GraphRepresentationInterface *graph2, *graph = new MatrixGraphRepresentation(false, 1);
-	MinimumSpanningTreeAlgoritm* mst = NULL;
+	GraphRepresentationInterface *graph = new MatrixGraphRepresentation(false, 1);
+	GraphRepresentationInterface *graph2 = new MatrixGraphRepresentation(false, 1);
+	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
 	do {
 		cin >> ch;
 		switch (ch) {
-		case 'p':
-			mst = new MinimumSpanningTreeAlgoritm(graph);
-			graph2 = mst->makeKruskalMst(new MatrixGraphRepresentation(false, 1));
+		case 'k':
+			graph2 = mst->makeKruskalMst(graph2);
 			graph2->printMatrixGraph();
-			delete graph2;
+			break;
+		case 'p':
+			graph2 = mst->makePrimMst(graph2);
+			graph2->printMatrixGraph();
 			break;
 		case 'g':
-			graph->generateGraph(10, 0.5, 1, 50);
+			graph->generateGraph(4, 0.99, 1, 50);
 			break;
 		case 'z':
 			graph->loadFromFile();
@@ -46,7 +49,10 @@ int _tmain(int argc, _TCHAR* argv[]) {
 		}
 	} while (ch != 'q');
 	delete graph;
-	delete mst;
+	delete graph2;
+	if (mst != NULL) {
+		delete mst;
+	}
 	return 0;
 }
 

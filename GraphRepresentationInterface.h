@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
+#include "EdgeStack.h"
 #include "EdgeList.h"
-
 class GraphRepresentationInterface {
 protected:
 	unsigned int vertexCount;
@@ -15,7 +15,7 @@ public:
 	virtual bool deleteEdge(unsigned, unsigned) = 0;
 	virtual unsigned vertexDegree(unsigned) = 0;
 	virtual int searchEdge(unsigned, unsigned) = 0;
-	virtual EdgeList* getAdjFor(unsigned) = 0;
+	virtual EdgeStack* getAdjFor(unsigned) = 0;
 	virtual void printListGraph(void);
 	virtual void loadFromFile(void);
 	virtual void printMatrixGraph(void);

@@ -76,13 +76,3 @@ unsigned MatrixGraphRepresentation::vertexDegree(unsigned vertex) {
 int MatrixGraphRepresentation::searchEdge(unsigned v, unsigned u) {
 	return matrix[v][u];
 }
-
-EdgeList* MatrixGraphRepresentation::getAdjFor(unsigned v) {
-	EdgeList *result = new EdgeList(v);
-	for (int i = 0; i < vertexCount; i++) {
-		if (matrix[v][i] >= 0) {
-			result->add(i, matrix[v][i]);
-		}
-	}
-	return result;
-}

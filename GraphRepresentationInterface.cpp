@@ -14,7 +14,7 @@ GraphRepresentationInterface::GraphRepresentationInterface(bool isDigraph, unsig
 void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	float density, const int weightFrom, const int weightTo) {
 	clear(vertexCount);
-	int edgesToGenerate = (int)(density * vertexCount * (vertexCount - 1)) / 2;
+	int edgesToGenerate = (int)((density * vertexCount * (vertexCount - 1))/ 2);
 	int spanningEdge = vertexCount - 1;
 	std::random_device rand_dev;
 	std::uniform_int_distribution<int> weightDistr(weightFrom, weightTo);
@@ -41,23 +41,21 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	}
 	delete addedVertexList;
 	delete vertexList;
-	vertexList = new MyList();
+	EdgeList *el = new EdgeList();
+	int jdelim = vertexCount;
 	for (int i = 0; i < vertexCount; i++) {
-		for (int j = 0; j < vertexCount; j++) {
-			vertexList->addAtEnd(i);
-			vertexList->addAtEnd(j);
+		if (!isDiGraph) {
+			jdelim = i;
+		}
+		for (int j = 0; j < jdelim; j++) {
+			el->add(Edge(i, j, weightDistr(generator)));
 		}
 	}
 	for (int i = 0; i < edgesToGenerate; i++) {
-		std::uniform_int_distribution<int> edgeDistr(0, vertexList->getSize() - 1);
+		std::uniform_int_distribution<int> edgeDistr(0, el->getSize() - 1);
 		int pos = edgeDistr(generator);
-		if (pos % 2 == 1) {
-			pos--;
-		}
-		int v1 = vertexList->removeAt(pos);
-		pos++;
-		int v2 = vertexList->removeAt(pos);
-		bool exist = insertEdge(v1, v2, weightDistr(generator));
+		Edge gen = el->pop(pos);
+		bool exist = insertEdge(gen.v1, gen.v2, gen.weight);
 		if (exist) {
 			i--;
 		}
@@ -112,4 +110,11 @@ void GraphRepresentationInterface::loadFromFile() {
 		cerr << "Cos nie tak" << endl;
 	}
 	file.close();
+}
+
+
+EdgeStack* GraphRepresentationInterface::getAdjFor(unsigned v) {
+	EdgeStack *result = new EdgeStack();
+	result->makeStack(this, v);
+	return result;
 }
