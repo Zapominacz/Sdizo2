@@ -14,7 +14,7 @@ private:
 public:
 	MyHeap(void);
 	~MyHeap(void);
-
+	int seekKey() { return baseArray[0]; }
 	inline unsigned int getSize(void) { return size; }
 	void fixHeapUp(void);
 	int pop(void);
