@@ -60,6 +60,18 @@ void EdgeList::add(Edge* edge) {
 	size++;
 }
 
+Edge* EdgeList::getAt(unsigned v) {
+	if (v < size) {
+		EdgeNode* tmp = head;
+		for (int i = 0; i < v; i++)  {
+			tmp = tmp->next;
+		}
+		return tmp->value;
+	} else {
+		return NULL;
+	}
+}
+
 Edge* EdgeList::getVal(unsigned vertex) {
 	EdgeNode *tmp = head;
 	while (tmp != NULL) {

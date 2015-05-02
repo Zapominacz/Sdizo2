@@ -63,7 +63,12 @@ unsigned ListGraphRepresentation::vertexDegree(unsigned vertex) {
 }
 
 int ListGraphRepresentation::searchEdge(unsigned v, unsigned u) {
-	return edgesList[v]->getVal(u)->weight;
+	Edge* e = edgesList[v]->getVal(u);
+	if (e == NULL) {
+		return -1;
+	} else {
+		return e->weight;
+	}
 }
 
 EdgeStack* ListGraphRepresentation::getAdjFor(unsigned v) {
