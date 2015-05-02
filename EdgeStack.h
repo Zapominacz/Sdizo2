@@ -5,10 +5,18 @@
 class EdgeStack {
 private:
 	struct EdgeNode {
-		Edge val;
+		Edge *val;
 		EdgeNode* next;
 		EdgeNode() {
 			next = NULL;
+			val = NULL;
+		}
+
+		~EdgeNode() {
+			if (val != NULL) {
+				delete val;
+				val = NULL;
+			}
 		}
 	};
 	unsigned size;
@@ -17,6 +25,6 @@ public:
 	unsigned getSize() { return size; }
 	EdgeStack();
 	~EdgeStack();
-	void push(Edge);
-	Edge pop();
+	void push(Edge*);
+	Edge* pop();
 };

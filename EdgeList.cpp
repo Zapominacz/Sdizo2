@@ -9,7 +9,7 @@ EdgeList::EdgeList(int vertex) {
 EdgeList::EdgeList(EdgeList* copy) {
 	EdgeNode* tmp = copy->head;
 	while (tmp != NULL) {
-		add(tmp->value.v2, tmp->value.weight);
+		add(tmp->value->v2, tmp->value->weight);
 		tmp = tmp->next;
 	}
 }
@@ -43,7 +43,7 @@ void EdgeList::add(unsigned int vertex, int weight) {
 	size++;
 }
 
-void EdgeList::add(Edge edge) {
+void EdgeList::add(Edge* edge) {
 	EdgeNode *newNode = new EdgeNode(edge);
 	EdgeNode *tmp = head;
 	EdgeNode *prev = NULL;
@@ -60,17 +60,17 @@ void EdgeList::add(Edge edge) {
 	size++;
 }
 
-Edge EdgeList::getVal(unsigned vertex) {
+Edge* EdgeList::getVal(unsigned vertex) {
 	EdgeNode *tmp = head;
 	while (tmp != NULL) {
-		if (tmp->value.v2 != vertex) {
+		if (tmp->value->v2 != vertex) {
 			tmp = tmp->next;
 		} else {
 			return tmp->value;
 			break;
 		}
 	}
-	return Edge(0, 0, 0);
+	return NULL;
 }
 
 bool EdgeList::remove(unsigned vertex) {
@@ -78,7 +78,7 @@ bool EdgeList::remove(unsigned vertex) {
 	EdgeNode *tmp = head;
 	EdgeNode *prev = NULL;
 	while (tmp != NULL) {
-		if (tmp->value.v2 != vertex) {
+		if (tmp->value->v2 != vertex) {
 			prev = tmp;
 			tmp = tmp->next;
 		} else {
@@ -96,13 +96,13 @@ bool EdgeList::remove(unsigned vertex) {
 	return result;
 }
 
-Edge EdgeList::pop(unsigned pos) {
+Edge* EdgeList::pop(unsigned pos) {
 	EdgeNode *tmp = head;
 	EdgeNode *prev = NULL;
 	if (pos >= size) {
-		return Edge(0, 0, -2);
+		return NULL;
 	}
-	for (int i = 0; i < pos; i++) {
+	for (unsigned i = 0; i < pos; i++) {
 		prev = tmp;
 		tmp = tmp->next;
 	}
@@ -112,7 +112,8 @@ Edge EdgeList::pop(unsigned pos) {
 		head = tmp->next;
 	}
 	size--;
-	Edge result = tmp->value;
+	Edge* result = tmp->value;
+	tmp->value = NULL;
 	delete tmp;
 	return result;
 }
@@ -121,7 +122,7 @@ bool EdgeList::exist(unsigned vertex) {
 	bool result = false;
 	EdgeNode *tmp = head;
 	while (tmp != NULL) {
-		if (tmp->value.v2 != vertex) {
+		if (tmp->value->v2 != vertex) {
 			tmp = tmp->next;
 		} else {
 			result = true;

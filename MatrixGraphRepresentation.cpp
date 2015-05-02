@@ -40,6 +40,7 @@ void MatrixGraphRepresentation::clear(unsigned vc) {
 			matrix[i][j] = -1;
 		}
 	}
+	edgeCount = 0;
 }
 
 bool MatrixGraphRepresentation::insertEdge(unsigned v, unsigned u, int weight) {
@@ -77,11 +78,11 @@ int MatrixGraphRepresentation::searchEdge(unsigned v, unsigned u) {
 	return matrix[v][u];
 }
 
-EdgeStack MatrixGraphRepresentation::getAdjFor(unsigned v) {
-	EdgeStack result = EdgeStack();
+EdgeStack* MatrixGraphRepresentation::getAdjFor(unsigned v) {
+	EdgeStack *result = new EdgeStack();
 	for (unsigned i = 0; i < vertexCount; i++) {
 		if (matrix[v][i] > -1) {
-			result.push(Edge(v, i, matrix[v][i]));
+			result->push(new Edge(v, i, matrix[v][i]));
 		}
 	}
 	return result;

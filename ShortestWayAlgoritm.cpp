@@ -20,31 +20,34 @@ ShortestWayAlgoritm::~ShortestWayAlgoritm() {
 GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentationInterface* base) {
 	int INF = 10000;
 	base->clear(graph->getVertexCount());
-	MyHeap heap = MyHeap();
-	heap.push(startVertex, 0);
+	MyHeap* heap = new MyHeap();
+	heap->push(startVertex, 0);
 	for (unsigned i = 0; i < base->getVertexCount(); i++) {
 		if (i == startVertex) {
 			continue;
 		} else {
-			heap.push(INF, i);
+			heap->push(INF, i);
 		}
 	}
-	while (heap.getSize() > 0) {
-		int key = heap.seekKey();
-		int u = heap.pop();
-		EdgeStack adjList = graph->getAdjFor(u);
-		for (unsigned i = 0; i < adjList.getSize(); i++) {
-			Edge tmp = adjList.pop();
-			int v = tmp.v2;
-			int weight = tmp.weight;
+	while (heap->getSize() > 0) {
+		int key = heap->seekKey();
+		int u = heap->pop();
+		EdgeStack* adjList = graph->getAdjFor(u);
+		for (unsigned i = 0; i < adjList->getSize(); i++) {
+			Edge* tmp = adjList->pop();
+			int v = tmp->v2;
+			int weight = tmp->weight;
 			if (base->vertexDegree(v) == 0) {
-				if (key + weight < heap.getKey(v)) {
-					heap.setKey(v, key + weight);
+				if (key + weight < heap->getKey(v)) {
+					heap->setKey(v, key + weight);
 					base->insertEdge(u, v, weight);
 				}
 			}
+			delete tmp;
 		}
+		delete adjList;
 	}
+	delete heap;
 	return base;
 }
 

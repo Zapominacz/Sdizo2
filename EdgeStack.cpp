@@ -6,8 +6,8 @@ EdgeStack::EdgeStack() {
 	top = NULL;
 }
 
-void EdgeStack::push(Edge edge) {
-	if (edge.weight > -1) {
+void EdgeStack::push(Edge* edge) {
+	if (edge->weight > -1) {
 		EdgeNode* currEdge = top;
 		EdgeNode* prevEdge = NULL;
 		EdgeNode *tmp = new EdgeNode();
@@ -18,8 +18,8 @@ void EdgeStack::push(Edge edge) {
 			return;
 		}
 		while (currEdge != NULL) {
-			Edge ce = currEdge->val;
-			if (ce.weight > edge.weight) {
+			Edge *ce = currEdge->val;
+			if (ce->weight > edge->weight) {
 				if (prevEdge == NULL) {
 					tmp->next = top;
 					top = tmp;
@@ -46,10 +46,11 @@ EdgeStack::~EdgeStack() {
 		delete t2;
 	}
 }
-Edge EdgeStack::pop() {
+Edge* EdgeStack::pop() {
 	EdgeNode *t2 = top;
 	top = top->next;
-	Edge r = t2->val;
+	Edge *r = t2->val;
+	t2->val = NULL;
 	size--;
 	delete t2;
 	return r;

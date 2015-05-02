@@ -16,6 +16,7 @@ void ListGraphRepresentation::clear(unsigned vc) {
 	removeLists();
 	vertexCount = vc;
 	createLists();
+	edgeCount = 0;
 }
 
 void ListGraphRepresentation::removeLists() {
@@ -62,15 +63,16 @@ unsigned ListGraphRepresentation::vertexDegree(unsigned vertex) {
 }
 
 int ListGraphRepresentation::searchEdge(unsigned v, unsigned u) {
-	return edgesList[v]->getVal(u).weight;
+	return edgesList[v]->getVal(u)->weight;
 }
 
-EdgeStack ListGraphRepresentation::getAdjFor(unsigned v) {
-	EdgeStack result = EdgeStack();
-	EdgeList tmp = EdgeList(edgesList[v]);
-	for (unsigned i = 0; i < tmp.getSize(); i++) {
-		Edge e = tmp.pop(0);
-		result.push(e);
+EdgeStack* ListGraphRepresentation::getAdjFor(unsigned v) {
+	EdgeStack *result = new EdgeStack();
+	EdgeList *tmp = new EdgeList(edgesList[v]);
+	for (unsigned i = 0; i < tmp->getSize(); i++) {
+		Edge *e = tmp->pop(0);
+		result->push(e);
 	}
+	delete tmp;
 	return result;
 }

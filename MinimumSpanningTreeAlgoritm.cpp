@@ -30,19 +30,22 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 	}
 	while (heap->getSize() > 0) {
 		int u = heap->pop();
-		EdgeStack adjList = graph->getAdjFor(u);
-		for (unsigned i = 0; i < adjList.getSize(); i++) {
-			Edge e = adjList.pop();
-			int v = e.v2;
-			int weight = e.weight;
+		EdgeStack *adjList = graph->getAdjFor(u);
+		for (unsigned i = 0; i < adjList->getSize(); i++) {
+			Edge *e = adjList->pop();
+			int v = e->v2;
+			int weight = e->weight;
 			if (base->vertexDegree(v) == 0) {
 				if (weight < heap->getKey(v)) {
 					heap->setKey(v, weight);
 					base->insertEdge(u, v, weight);
 				}
 			}
+			delete e;
 		}
+		delete adjList;
 	}
+	delete heap;
 	return base;
 }
 
@@ -54,16 +57,17 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makeKruskalMst(GraphR
 		for (unsigned j = 0; j < i; j++) {
 			int weight = graph->searchEdge(i, j);
 			if (weight > -1) {
-				edges->push(Edge(i, j, weight));
+				edges->push(new Edge(i, j, weight));
 			}
 		}
 	}
 	for (unsigned i = 0; i < graph->getEdgeCount(); i++) {
-		Edge edge = edges->pop();
-		if (unionFind->isNotTheSameUnion(edge.v1, edge.v2)) {
-			base->insertEdge(edge.v1, edge.v2, edge.weight);
-			unionFind->merge(edge.v1, edge.v2);
+		Edge *edge = edges->pop();
+		if (unionFind->isNotTheSameUnion(edge->v1, edge->v2)) {
+			base->insertEdge(edge->v1, edge->v2, edge->weight);
+			unionFind->merge(edge->v1, edge->v2);
 		}
+		delete edge;
 	}
 	return base;
 }

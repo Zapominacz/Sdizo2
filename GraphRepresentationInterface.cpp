@@ -48,18 +48,20 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 			jdelim = i;
 		}
 		for (unsigned j = 0; j < jdelim; j++) {
-			el->add(Edge(i, j, weightDistr(generator)));
+			el->add(new Edge(i, j, weightDistr(generator)));
 		}
 	}
 	for (int i = 0; i < edgesToGenerate; i++) {
 		std::uniform_int_distribution<int> edgeDistr(0, el->getSize() - 1);
 		int pos = edgeDistr(generator);
-		Edge gen = el->pop(pos);
-		bool exist = insertEdge(gen.v1, gen.v2, gen.weight);
+		Edge* gen = el->pop(pos);
+		bool exist = insertEdge(gen->v1, gen->v2, gen->weight);
 		if (exist) {
 			i--;
 		}
+		delete gen;
 	}
+	delete el;
 }
 
 void GraphRepresentationInterface::printMatrixGraph() {
