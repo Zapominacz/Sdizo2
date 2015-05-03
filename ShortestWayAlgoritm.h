@@ -11,7 +11,9 @@ public:
 	GraphRepresentationInterface* makeBellman(GraphRepresentationInterface*);
 	void loadGraph(GraphRepresentationInterface*);
 	void setStartVertex(unsigned v) { startVertex = v; }
+	int getDistanceTo(int v) { if (distances != NULL) return distances[v]; else return -1; }
 private:
 	GraphRepresentationInterface* graph;
 	unsigned startVertex;
+	int* distances;
 };

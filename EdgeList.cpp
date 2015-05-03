@@ -70,7 +70,7 @@ void EdgeList::add(Edge* edge) {
 Edge* EdgeList::getAt(unsigned v) {
 	if (v < size) {
 		EdgeNode* tmp = head;
-		for (int i = 0; i < v; i++)  {
+		for (unsigned i = 0; i < v; i++)  {
 			tmp = tmp->next;
 		}
 		return tmp->value;

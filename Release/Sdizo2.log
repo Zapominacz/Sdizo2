@@ -1,0 +1,44 @@
+﻿Build started 5/3/2015 12:20:58 PM.
+     1>Project "D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Sdizo2\Sdizo2.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         D:\Programowanie\Visual Studio 2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\Sdizo2.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         D:\Programowanie\Visual Studio 2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\Sdizo2.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt EdgeList.cpp EdgeStack.cpp GraphRepresentationInterface.cpp ListGraphRepresentation.cpp MatrixGraphRepresentation.cpp MinimumSpanningTreeAlgoritm.cpp MyArray.cpp MyHeap.cpp MyList.cpp Sdizo2.cpp ShortestWayAlgoritm.cpp Timer.cpp UnionFind.cpp
+         EdgeList.cpp
+         EdgeStack.cpp
+         GraphRepresentationInterface.cpp
+         ListGraphRepresentation.cpp
+         MatrixGraphRepresentation.cpp
+         MinimumSpanningTreeAlgoritm.cpp
+         MyArray.cpp
+         MyHeap.cpp
+     1>MyHeap.cpp(122): warning C4018: '<' : signed/unsigned mismatch
+         MyList.cpp
+         Sdizo2.cpp
+         ShortestWayAlgoritm.cpp
+         Timer.cpp
+         UnionFind.cpp
+     1>UnionFind.cpp(15): warning C4018: '<' : signed/unsigned mismatch
+       Link:
+         D:\Programowanie\Visual Studio 2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.lib" /MACHINE:X86 /SAFESEH Release\EdgeList.obj
+         Release\EdgeStack.obj
+         Release\GraphRepresentationInterface.obj
+         Release\ListGraphRepresentation.obj
+         Release\MatrixGraphRepresentation.obj
+         Release\MinimumSpanningTreeAlgoritm.obj
+         Release\MyArray.obj
+         Release\MyHeap.obj
+         Release\MyList.obj
+         Release\Sdizo2.obj
+         Release\ShortestWayAlgoritm.obj
+         Release\stdafx.obj
+         Release\Timer.obj
+         Release\UnionFind.obj
+         Generating code
+         Finished generating code
+         Sdizo2.vcxproj -> D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.exe
+     1>Done Building Project "D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Sdizo2\Sdizo2.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:03.09

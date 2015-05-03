@@ -23,7 +23,7 @@ void MinimumSpanningTreeAlgoritm::loadGraph(GraphRepresentationInterface* graph)
 
 GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepresentationInterface* base) {
 	const int INF = 100000;
-	int vCount = graph->getVertexCount();
+	unsigned vCount = graph->getVertexCount();
 	base->clear(vCount);
 	MyHeap *heap = new MyHeap();
 	bool *addedVertexes = new bool[vCount];
@@ -39,7 +39,7 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 		int u = heap->pop();
 		addedVertexes[u] = true;
 		EdgeList *adjList = graph->getSimpleAdjFor(u);
-		int eSize = adjList->getSize();
+		unsigned eSize = adjList->getSize();
 		for (unsigned i = 0; i < eSize; i++) {
 			Edge *e = adjList->pop(0);
 			int v = e->v2;
@@ -55,7 +55,7 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 		}
 		delete adjList;
 	}
-	for (int i = 0; i < vCount; i++) {
+	for (unsigned i = 0; i < vCount; i++) {
 		if (x[i] != -2) {
 			base->insertEdge(i, x[i], w[i]);
 		}

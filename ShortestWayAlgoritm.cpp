@@ -6,20 +6,41 @@
 
 ShortestWayAlgoritm::ShortestWayAlgoritm() {
 	loadGraph(NULL);
+	distances = NULL;
 }
 
 ShortestWayAlgoritm::ShortestWayAlgoritm(GraphRepresentationInterface* graph, unsigned v) {
 	loadGraph(graph);
 	setStartVertex(v);
+	distances = NULL;
 }
 
 ShortestWayAlgoritm::~ShortestWayAlgoritm() {
 	graph = NULL;
+	if (distances != NULL) {
+		delete distances;
+		distances = NULL;
+	}
 }
 
 GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentationInterface* base) {
 	int INF = 10000;
-	base->clear(graph->getVertexCount());
+	unsigned vCount = graph->getVertexCount();
+	base->clear(vCount);
+	if (distances != NULL) {
+		delete[] distances;
+	}
+	distances = new int[vCount];
+	int *incidences = new int[vCount];
+	int *weightBuf = new int[vCount];
+
+	for (unsigned i = 0; i < vCount; i++) {
+		distances[i] = INF;
+	}
+	weightBuf[startVertex] = -1;
+	incidences[startVertex] = startVertex;
+	distances[startVertex] = 0;
+
 	MyHeap* heap = new MyHeap();
 	heap->push(startVertex, 0);
 	for (unsigned i = 0; i < base->getVertexCount(); i++) {
@@ -37,16 +58,21 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 			Edge* tmp = adjList->pop();
 			int v = tmp->v2;
 			int weight = tmp->weight;
-			if (base->vertexDegree(v) == 0) {
-				if (key + weight < heap->getKey(v)) {
-					heap->setKey(v, key + weight);
-					base->insertEdge(u, v, weight);
-				}
+			if (key + weight < heap->getKey(v)) {
+				heap->setKey(v, key + weight);
+				weightBuf[v] = weight;
+				distances[v] = weight + distances[u];
+				incidences[v] = u;
 			}
 			delete tmp;
 		}
 		delete adjList;
 	}
+	for (unsigned i = 0; i < vCount; i++) {
+		base->insertEdge(incidences[i], i, weightBuf[i]);
+	}
+	delete[] weightBuf;
+	delete[] incidences;
 	delete heap;
 	return base;
 }
@@ -55,29 +81,36 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 	int INF = 10000;
 	unsigned vCount = graph->getVertexCount();
 	base->clear(vCount);
-	int *vWeights = new int[vCount];
-	int *x = new int[vCount];
-	for (unsigned i = 0; i < vCount; i++) {
-		vWeights[i] = INF;
+	if (distances != NULL) {
+		delete[] distances;
 	}
-	x[startVertex] = startVertex;
-	vWeights[startVertex] = 0;
+	distances = new int[vCount];
+	int *incidences = new int[vCount];
+	int *weightBuf = new int[vCount];
+	weightBuf[startVertex] = -1;
+	for (unsigned i = 0; i < vCount; i++) {
+		distances[i] = INF;
+	}
+	incidences[startVertex] = startVertex;
+	distances[startVertex] = 0;
+
 	for (unsigned i = 0; i < vCount; i++) {
 		for (unsigned j = 0; j < vCount; j++) {
 			int w = graph->searchEdge(i, j);
 			if (w > -1) {
-				if (vWeights[i] < INF && vWeights[i] + w < vWeights[j]) {
-					vWeights[j] = vWeights[i] + w;
-					x[j] = i;
+				if (distances[i] < INF && distances[i] + w < distances[j]) {
+					distances[j] = distances[i] + w;
+					incidences[j] = i;
+					weightBuf[j] = w;
 				}
 			}
 		}
 	}
 	for (unsigned i = 0; i < vCount; i++) {
-		base->insertEdge(i, x[i], vWeights[i]);
+		base->insertEdge(incidences[i], i, weightBuf[i]);
 	}
-	delete[] vWeights;
-	delete[] x;
+	delete[] weightBuf;
+	delete[] incidences;
 	return base;
 }
 

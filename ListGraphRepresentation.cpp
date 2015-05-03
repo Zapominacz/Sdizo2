@@ -74,7 +74,7 @@ int ListGraphRepresentation::searchEdge(unsigned v, unsigned u) {
 EdgeStack* ListGraphRepresentation::getAdjFor(unsigned v) {
 	EdgeStack *result = new EdgeStack();
 	EdgeList *tmp = new EdgeList(edgesList[v]);
-	int vSize = tmp->getSize();
+	unsigned vSize = tmp->getSize();
 	for (unsigned i = 0; i < vSize; i++) {
 		Edge *e = tmp->pop(0);
 		result->push(e);

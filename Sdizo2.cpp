@@ -128,7 +128,7 @@ void presentation() {
 			}
 		}
 		else if (sw != NULL) {
-			cout << "q: wyjscie\n1: Wczytaj\n2: Djikstra\n3: Ford-Bellman\n4: Pokaz\n5: generuj\n6: poczatek" << endl;
+			cout << "q: wyjscie\n1: Wczytaj\n2: Djikstra\n3: Ford-Bellman\n4: Pokaz\n5: generuj\n6: poczatek\n7: odleglosci" << endl;
 			cin >> ch;
 			switch (ch) {
 			case'q':
@@ -154,8 +154,7 @@ void presentation() {
 			case'4':
 				if (matrix) {
 					graph->printMatrixGraph();
-				}
-				else {
+				} else {
 					graph->printListGraph();
 				}
 				break;
@@ -171,6 +170,12 @@ void presentation() {
 				cin >> v;
 				sw->setStartVertex(v);
 				break;
+			case'7':
+				cout << "Odleglosci od pkt startowego:" << endl;
+				for (unsigned i = 0; i < graph->getVertexCount(); i++) {
+					cout << i << ": " << sw->getDistanceTo(i) << endl;
+				}
+				break;
 			default:
 				cout << "Zly wybor!" << endl;
 				continue;
@@ -181,33 +186,35 @@ void presentation() {
 
 void test1() {
 	using namespace std;
-	int vCount[] = { 100, 500, 1000, 5000, 10000 };
-	float dens[] = { 0.25, 0.5, 0.75, 0.99};
-	int times = 150;
+	int vCount[] = { 750};
+	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f};
+	int times = 5;
 	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(false, 1);
 	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(false, 1);
 	GraphRepresentationInterface* graph3 = new MatrixGraphRepresentation(false, 1);
 	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
-	fstream file("result.txt", std::ios_base::out);
-	fstream file2("result2.txt", std::ios_base::out);
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 1; j++) {
+	fstream file("result.txt", std::ios_base::app);
+	fstream file2("result2.txt", std::ios_base::app);
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 4; j++) {
 			Timer *timer = new Timer();
 			Timer *timer2 = new Timer();
 			graph->generateGraph(vCount[i], dens[j], 1, 99);
-			for (int k = 0; k < 10; k++) {
+			for (int k = 0; k < times; k++) {
 				timer->startTimer();
 				graph2 = mst->makeKruskalMst(graph2);
 				timer->stopTimer();
 				timer2->startTimer();
 				graph3 = mst->makePrimMst(graph3);
 				timer2->stopTimer();
-
+				cout << vCount[i] << " - " << dens[j] << " - " << k << endl;
 				timer->nextMeasure();
 				timer2->nextMeasure();
 			}
-			file << vCount[i]<< " - "<< dens[j] << " - " << timer->getAvgTime();
-			file2 << vCount[i] << " - " << dens[j] << " - " << timer2->getAvgTime();
+			file << vCount[i] << " - " << dens[j] << " - " << timer->getAvgTime() << endl;
+			file2 << vCount[i] << " - " << dens[j] << " - " << timer2->getAvgTime() << endl;
+			file.flush();
+			file2.flush();
 			delete timer;
 			delete timer2;
 		}
@@ -218,8 +225,8 @@ void test1() {
 
 void test2() {
 	using namespace std;
-	int vCount[] = { 100, 500, 1000, 5000, 10000 };
-	float dens[] = { 0.25, 0.5, 0.75, 0.99 };
+	int vCount[] = { 100, 500, 1000, 2500, 5000 };
+	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f };
 	int times = 150;
 	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(true, 1);
 	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(true, 1);
@@ -227,12 +234,12 @@ void test2() {
 	ShortestWayAlgoritm* mst = new ShortestWayAlgoritm(graph, 0);
 	fstream file("resultS.txt", std::ios_base::out);
 	fstream file2("resultS2.txt", std::ios_base::out);
-	for (int i = 0; i < 1; i++) {
-		for (int j = 0; j < 1; j++) {
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 4; j++) {
 			Timer *timer = new Timer();
 			Timer *timer2 = new Timer();
 			graph->generateGraph(vCount[i], dens[j], 1, 99);
-			for (int k = 0; k < 1; k++) {
+			for (int k = 0; k < times; k++) {
 				timer->startTimer();
 				graph2 = mst->makeDikstra(graph2);
 				timer->stopTimer();
@@ -254,8 +261,8 @@ void test2() {
 }
 
 int _tmain(int argc, _TCHAR* argv[]) {
-	presentation();
-	//test1();
+	//presentation();
+	test1();
 	//test2();
 	return 0;
 }
