@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+/** Klasa mierz¹ca czasy wykonania algorytmów*/
 class Timer {
 private:
 	LARGE_INTEGER performanceCountStart;

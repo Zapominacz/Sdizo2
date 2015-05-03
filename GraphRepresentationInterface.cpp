@@ -10,7 +10,7 @@ GraphRepresentationInterface::GraphRepresentationInterface(bool isDigraph, unsig
 	vertexCount = vCount;
 	edgeCount = 0;
 }
-
+/** generuje graf*/
 void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	float density, const int weightFrom, const int weightTo) {
 	clear(vertexCount);
@@ -26,15 +26,17 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	MyList* vertexList = new MyList();
 	MyList* addedVertexList = new MyList();
 	for (unsigned i = 0; i < vertexCount; i++) {
-		vertexList->addAtEnd(i);
+		vertexList->addAtEnd(i); //wierzcho³ki jeszcze nie dodane do grafu
 	}
 	std::uniform_int_distribution<int> distr(0, vertexList->getSize() - 1);
 	addedVertexList->addAtBeginning(vertexList->removeAt(distr(generator)));
 
+	//jeœli jestem w stanie wygenerowaæ drzewo spinaj¹ce tworze je
 	if (edgesToGenerate >= spanningEdge) {
 		for (int i = 0; i < spanningEdge; i++) {
 			std::uniform_int_distribution<int> distr(0, vertexList->getSize() - 1);
 			std::uniform_int_distribution<int> distr2(0, addedVertexList->getSize() - 1);
+			//przek³adam wierzcho³ek z nieu¿ywany do u¿ytych
 			int newVertex = vertexList->removeAt(distr(generator));
 			int oldVertex = addedVertexList->getValueAt(distr2(generator));
 			insertEdge(oldVertex, newVertex, weightDistr(generator));
@@ -42,6 +44,7 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 		}
 		edgesToGenerate -= spanningEdge;
 	}
+	//Generuje wszystkie mo¿liwe krawêdzie które mogê dodaæ
 	delete addedVertexList;
 	delete vertexList;
 	EdgeList *el = new EdgeList();
@@ -54,6 +57,7 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 			el->add(new Edge(i, j, weightDistr(generator)));
 		}
 	}
+	//losuje z puli krawêdzi i dodaje a¿ do otrzymania po¿¹danej iloœci
 	for (int i = 0; i < edgesToGenerate; i++) {
 		std::uniform_int_distribution<int> edgeDistr(0, el->getSize() - 1);
 		int pos = edgeDistr(generator);

@@ -1,14 +1,14 @@
 #pragma once
 #include "stdafx.h"
 #include "Edge.h"
-
+/** Struktura reprezentuj¹ca list krawêdzy*/
 class EdgeList {
 private:
 	struct EdgeNode {
 		Edge *value;
 		EdgeNode* next;
 		EdgeNode(int vertex2, int weight) {
-			value = new Edge(-1, vertex2, weight);
+			value = new Edge(-1, vertex2, weight); //-1 oznacza krawêdŸ podan¹ w polu vertex
 			next = NULL;
 		}
 		EdgeNode(Edge *e) {

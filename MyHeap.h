@@ -4,7 +4,7 @@
 /*Kopiec typu min z kluczem i wartoœci¹*/
 class MyHeap {
 private:
-	int* baseArray;
+	int* baseArray; //tablica kluczy
 	int* valueArray;
 	unsigned size;
 	int getParentIndex(int);

@@ -3,7 +3,6 @@
 #include "ListGraphRepresentation.h"
 #include "MinimumSpanningTreeAlgoritm.h"
 #include "ShortestWayAlgoritm.h"
-#include <fstream>
 #include "Timer.h"
 
 void presentation() {
@@ -186,9 +185,9 @@ void presentation() {
 
 void test1() {
 	using namespace std;
-	int vCount[] = { 750};
-	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f};
-	int times = 5;
+	int vCount[] = { 10, 50, 100, 500, 750 };
+	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f };
+	int times[] = { 100, 100, 100, 5, 2};
 	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(false, 1);
 	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(false, 1);
 	GraphRepresentationInterface* graph3 = new MatrixGraphRepresentation(false, 1);
@@ -200,7 +199,7 @@ void test1() {
 			Timer *timer = new Timer();
 			Timer *timer2 = new Timer();
 			graph->generateGraph(vCount[i], dens[j], 1, 99);
-			for (int k = 0; k < times; k++) {
+			for (int k = 0; k < times[i]; k++) {
 				timer->startTimer();
 				graph2 = mst->makeKruskalMst(graph2);
 				timer->stopTimer();
@@ -225,12 +224,12 @@ void test1() {
 
 void test2() {
 	using namespace std;
-	int vCount[] = { 100, 500, 1000, 2500, 5000 };
+	int vCount[] = { 10, 50, 100, 500, 750 };
 	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f };
-	int times = 150;
-	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(true, 1);
-	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(true, 1);
-	GraphRepresentationInterface* graph3 = new MatrixGraphRepresentation(true, 1);
+	int times[] = { 100, 100, 100, 5, 2 };
+	GraphRepresentationInterface* graph = new ListGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graph2 = new ListGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graph3 = new ListGraphRepresentation(true, 1);
 	ShortestWayAlgoritm* mst = new ShortestWayAlgoritm(graph, 0);
 	fstream file("resultS.txt", std::ios_base::out);
 	fstream file2("resultS2.txt", std::ios_base::out);
@@ -239,7 +238,7 @@ void test2() {
 			Timer *timer = new Timer();
 			Timer *timer2 = new Timer();
 			graph->generateGraph(vCount[i], dens[j], 1, 99);
-			for (int k = 0; k < times; k++) {
+			for (int k = 0; k < times[i]; k++) {
 				timer->startTimer();
 				graph2 = mst->makeDikstra(graph2);
 				timer->stopTimer();
@@ -261,8 +260,8 @@ void test2() {
 }
 
 int _tmain(int argc, _TCHAR* argv[]) {
-	//presentation();
-	test1();
+	presentation();
+	//test1();
 	//test2();
 	return 0;
 }

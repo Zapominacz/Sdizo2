@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+/** Zastosowana g³ownie do generowania grafu*/
 class MyList {
 private:
 	struct ListElement {

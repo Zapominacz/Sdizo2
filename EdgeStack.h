@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "Edge.h"
-
+/** Klasa uk³adaj¹ca zawieraj¹ce krawêdzie w posortowany stos (od el. najmneijszego na szczycie)*/
 class EdgeStack {
 private:
 	struct EdgeNode {

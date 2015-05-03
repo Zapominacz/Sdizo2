@@ -5,7 +5,7 @@ UnionFind::UnionFind(unsigned vCount) {
 	vertexCount = vCount;
 	baseArray = new Subtree*[vCount];
 	for (unsigned int i = 0; i < vertexCount; i++) {
-		baseArray[i] = new Subtree();
+		baseArray[i] = new Subtree(); //ka¿dy wierzcho³ek jest drzewem
 		baseArray[i]->vertex = i;
 		baseArray[i]->parent = NULL;
 	}
@@ -22,7 +22,7 @@ unsigned UnionFind::findSubtree(unsigned v) {
 	Subtree* currSubtree = baseArray[v];
 	Subtree* prev = NULL;
 	while (currSubtree != NULL) {
-		prev = currSubtree;
+		prev = currSubtree; //Szukam rodzica podrzewa
 		currSubtree = currSubtree->parent;
 	}
 	return prev->vertex;
@@ -37,6 +37,6 @@ void UnionFind::merge(unsigned v, unsigned u) {
 		return;
 	}
 	unsigned subtree1 = findSubtree(v);
-	unsigned subtree2 = findSubtree(u);
+	unsigned subtree2 = findSubtree(u); //umieszczam jedno drzewo jako rodzica drugiego
 	baseArray[subtree1]->parent = baseArray[subtree2];
 }

@@ -3,7 +3,7 @@
 #include "EdgeList.h"
 #include "EdgeStack.h"
 #include "Edge.h"
-
+/** Klasa reprezentuj¹ca dowonly graf*/
 class GraphRepresentationInterface {
 protected:
 	unsigned int vertexCount;

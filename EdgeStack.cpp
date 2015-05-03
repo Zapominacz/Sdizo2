@@ -5,7 +5,7 @@
 EdgeStack::EdgeStack() {
 	top = NULL;
 }
-
+/** Umieszczam wartoœæ na stosie tak, aby by³ nadal posortowany*/
 void EdgeStack::push(Edge* edge) {
 	if (edge->weight > -1) {
 		EdgeNode* currEdge = top;

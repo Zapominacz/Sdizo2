@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "GraphRepresentationInterface.h"
-
+/** Klasa wykonuj¹ca algorytmy najkrótszej drogi na podanym grafie*/
 class ShortestWayAlgoritm {
 public:
 	ShortestWayAlgoritm();

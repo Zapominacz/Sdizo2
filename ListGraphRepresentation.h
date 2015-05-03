@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "GraphRepresentationInterface.h"
-
+/** implementacja grafu jaka lista s¹siedztwa*/
 class ListGraphRepresentation : public GraphRepresentationInterface {
 public:
 	ListGraphRepresentation(bool, unsigned int);

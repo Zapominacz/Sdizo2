@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+/** Struktura reprezentuj¹ca pojedyncza krawêdŸ*/
 class Edge {
 public:
 	int weight;

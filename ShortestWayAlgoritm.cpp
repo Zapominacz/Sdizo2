@@ -28,19 +28,20 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	unsigned vCount = graph->getVertexCount();
 	base->clear(vCount);
 	if (distances != NULL) {
-		delete[] distances;
+		delete[] distances; //czyszcze poprzedne odleg³oœci
 	}
 	distances = new int[vCount];
+	//tablice pomocnicze do generowania grafu wyniku
 	int *incidences = new int[vCount];
 	int *weightBuf = new int[vCount];
-
+	//poczakowo wszystkie drogi maj¹ wartoœæ INF
 	for (unsigned i = 0; i < vCount; i++) {
 		distances[i] = INF;
 	}
 	weightBuf[startVertex] = -1;
 	incidences[startVertex] = startVertex;
 	distances[startVertex] = 0;
-
+	//przechowuje krawêdzie w kopcu
 	MyHeap* heap = new MyHeap();
 	heap->push(startVertex, 0);
 	for (unsigned i = 0; i < base->getVertexCount(); i++) {
@@ -52,17 +53,17 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	}
 	while (heap->getSize() > 0) {
 		int key = heap->seekKey();
-		int u = heap->pop();
+		int u = heap->pop(); //wyci¹gam wierzcho³ek o najmneijszej wadze i pobieram jego s¹siednie wierzcho³ki
 		EdgeStack* adjList = graph->getAdjFor(u);
 		for (unsigned i = 0; i < adjList->getSize(); i++) {
 			Edge* tmp = adjList->pop();
 			int v = tmp->v2;
 			int weight = tmp->weight;
-			if (key + weight < heap->getKey(v)) {
-				heap->setKey(v, key + weight);
+			if (key + weight < heap->getKey(v)) { //zgodnie z nierównoœci¹ trójk¹ta jeœli droga jest lepsza
+				heap->setKey(v, key + weight); //zastêpuje najkrótsz¹ trasê do tego wierzcho³ka now¹
 				weightBuf[v] = weight;
 				distances[v] = weight + distances[u];
-				incidences[v] = u;
+				incidences[v] = u; //aktualizuje zmienne pomocnicze
 			}
 			delete tmp;
 		}
@@ -91,15 +92,15 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 	for (unsigned i = 0; i < vCount; i++) {
 		distances[i] = INF;
 	}
-	incidences[startVertex] = startVertex;
+	incidences[startVertex] = startVertex;//zmienne pomocnicze i ich inicjalizacja
 	distances[startVertex] = 0;
-
+	
 	for (unsigned i = 0; i < vCount; i++) {
 		for (unsigned j = 0; j < vCount; j++) {
 			int w = graph->searchEdge(i, j);
-			if (w > -1) {
-				if (distances[i] < INF && distances[i] + w < distances[j]) {
-					distances[j] = distances[i] + w;
+			if (w > -1) { //iteruje po wszystkich mo¿liwych krawêdziach, jeœli istnieje
+				if (distances[i] < INF && distances[i] + w < distances[j]) { //sprawdzam czy jest to lepsza droga z pocz¹tkowego
+					distances[j] = distances[i] + w; //wierzcho³ka i jeœli tak, zamieniam
 					incidences[j] = i;
 					weightBuf[j] = w;
 				}
@@ -107,7 +108,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 		}
 	}
 	for (unsigned i = 0; i < vCount; i++) {
-		base->insertEdge(incidences[i], i, weightBuf[i]);
+		base->insertEdge(incidences[i], i, weightBuf[i]); //tworze graf wyniku
 	}
 	delete[] weightBuf;
 	delete[] incidences;

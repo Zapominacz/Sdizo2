@@ -1,6 +1,6 @@
 #pragma once
 #include "stdafx.h"
-
+/** Klasa wykorzystywana w algorytmie Kruskala do sprawdzania w jakim poddrzewie jest dany wierzcho³ek*/
 class UnionFind {
 private:
 	struct Subtree {

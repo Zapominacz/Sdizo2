@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 #include "GraphRepresentationInterface.h"
-
+/** implementacja grafu jako macierz incydencji*/
 class MatrixGraphRepresentation : public GraphRepresentationInterface {
 public:
 	MatrixGraphRepresentation(bool, unsigned int);
