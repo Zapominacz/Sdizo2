@@ -14,4 +14,5 @@ public:
 	void stopTimer(void);
 	void nextMeasure(void);
 	void printAvgTime(void);
+	double getAvgTime(void);
 };

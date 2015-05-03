@@ -15,6 +15,9 @@ void GraphRepresentationInterface::generateGraph(const unsigned int vertexCount,
 	float density, const int weightFrom, const int weightTo) {
 	clear(vertexCount);
 	int edgesToGenerate = (int)((density * vertexCount * (vertexCount - 1))/ 2);
+	if (isDiGraph) {
+		edgesToGenerate *= 2;
+	}
 	int spanningEdge = vertexCount - 1;
 	std::random_device rand_dev;
 	std::uniform_int_distribution<int> weightDistr(weightFrom, weightTo);

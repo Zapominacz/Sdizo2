@@ -24,4 +24,6 @@ public:
 	virtual void generateGraph(const unsigned int, float, const int, const int);
 	unsigned getVertexCount(void) { return vertexCount;  }
 	unsigned getEdgeCount(void) { return edgeCount; }
+	void setDigraph(bool digraph) { isDiGraph = digraph; }
+	bool isDigraph() { return isDiGraph; }
 };

@@ -29,3 +29,7 @@ void Timer::printAvgTime(void) {
 	double tm = cumulativeSum.QuadPart / (double) count;
 	cout <<endl<<"Time:"<<tm <<endl;
 }
+
+double Timer::getAvgTime(void) {
+	return cumulativeSum.QuadPart / (double)count;
+}
