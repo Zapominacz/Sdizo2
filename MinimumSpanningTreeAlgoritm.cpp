@@ -38,10 +38,10 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 	while (heap->getSize() > 0) {
 		int u = heap->pop();
 		addedVertexes[u] = true;
-		EdgeStack *adjList = graph->getAdjFor(u);
+		EdgeList *adjList = graph->getSimpleAdjFor(u);
 		int eSize = adjList->getSize();
 		for (unsigned i = 0; i < eSize; i++) {
-			Edge *e = adjList->pop();
+			Edge *e = adjList->pop(0);
 			int v = e->v2;
 			int weight = e->weight;
 			if (!addedVertexes[v]) {

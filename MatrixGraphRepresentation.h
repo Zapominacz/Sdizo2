@@ -14,7 +14,8 @@ public:
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);
 	virtual EdgeStack* getAdjFor(unsigned);
-	inline bool exist(unsigned v, unsigned u) { return matrix[v][u] > -1; }
+	virtual EdgeList* getSimpleAdjFor(unsigned);
+	virtual bool exist(unsigned, unsigned);
 private:
 	int** matrix;
 };

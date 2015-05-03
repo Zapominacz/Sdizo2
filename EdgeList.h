@@ -35,6 +35,7 @@ public:
 	void removeList(void);
 	void add(unsigned int, int);
 	void add(Edge *edge);
+	void addAtBeginning(Edge *edge);
 	bool exist(unsigned);
 	bool remove(unsigned);
 	Edge* getVal(unsigned);

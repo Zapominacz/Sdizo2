@@ -43,6 +43,13 @@ void EdgeList::add(unsigned int vertex, int weight) {
 	size++;
 }
 
+void EdgeList::addAtBeginning(Edge* edge) {
+	EdgeNode *newNode = new EdgeNode(edge);
+	newNode->next = head;
+	head = newNode;
+	size++;
+}
+
 void EdgeList::add(Edge* edge) {
 	EdgeNode *newNode = new EdgeNode(edge);
 	EdgeNode *tmp = head;

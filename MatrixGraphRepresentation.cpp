@@ -30,60 +30,103 @@ void MatrixGraphRepresentation::deleteMatrix() {
 }
 
 void MatrixGraphRepresentation::clear(unsigned vc) {
-	if (vc != vertexCount) {
-		deleteMatrix();
-		vertexCount = vc;
-		createMatrix();
-	}
-	for (unsigned i = 0; i < vertexCount; i++) {
-		for (unsigned j = 0; j < vertexCount; j++) {
-			matrix[i][j] = -1;
-		}
-	}
+	deleteMatrix();
 	edgeCount = 0;
+	vertexCount = vc;
+	createMatrix();
 }
 
 bool MatrixGraphRepresentation::insertEdge(unsigned v, unsigned u, int weight) {
-	bool exist = this->exist(v, u);
-	if (!exist) {
-		matrix[v][u] = weight;
-		if (!isDiGraph) {
-			matrix[u][v] = weight;
+	if (v < vertexCount && u < vertexCount) {
+		bool exist = this->exist(v, u);
+		if (!exist) {
+			matrix[v][u] = weight;
+			if (!isDiGraph) {
+				matrix[u][v] = weight;
+			}
+			edgeCount++;
 		}
-		edgeCount++;
+		return exist;
+	} else {
+		printf("zla krawedz");
+		return false;
 	}
-	return exist;
 }
 
 bool MatrixGraphRepresentation::deleteEdge(unsigned v, unsigned u) {
-	bool exist = this->exist(v, u);
-	if (exist) {
-		matrix[v][u] = -1;
-		edgeCount--;
+	if (v < vertexCount && u < vertexCount) {
+		bool exist = this->exist(v, u);
+		if (exist) {
+			matrix[v][u] = -1;
+			edgeCount--;
+		}
+		return exist;
+	} else {
+		printf("zla krawedz");
+		return false;
 	}
-	return exist;
 }
 
 unsigned MatrixGraphRepresentation::vertexDegree(unsigned vertex) {
-	int result = 0;
-	for (unsigned i = 0; i < vertexCount; i++) {
-		if (exist(vertex, i)) {
-			result++;
+	if (vertex < vertexCount) {
+		int result = 0;
+		for (unsigned i = 0; i < vertexCount; i++) {
+			if (exist(vertex, i)) {
+				result++;
+			}
 		}
+		return result;
+	} else {
+		return -1;
 	}
-	return result;
+}
+
+bool MatrixGraphRepresentation::exist(unsigned v, unsigned u) {
+	if (v < vertexCount && u < vertexCount) {
+		return matrix[v][u] > -1;
+	}
+	else {
+		printf("zla krawedz");
+		return false;
+	}
 }
 
 int MatrixGraphRepresentation::searchEdge(unsigned v, unsigned u) {
-	return matrix[v][u];
+	if (v < vertexCount && u < vertexCount) {
+		return matrix[v][u];
+	} else {
+		 printf("err");
+		 return-2;
+	}
+	
 }
 
 EdgeStack* MatrixGraphRepresentation::getAdjFor(unsigned v) {
-	EdgeStack *result = new EdgeStack();
-	for (unsigned i = 0; i < vertexCount; i++) {
-		if (matrix[v][i] > -1) {
-			result->push(new Edge(v, i, matrix[v][i]));
+	if (v < vertexCount) {
+		EdgeStack *result = new EdgeStack();
+		for (unsigned i = 0; i < vertexCount; i++) {
+			if (matrix[v][i] > -1) {
+				result->push(new Edge(v, i, matrix[v][i]));
+			}
 		}
+		return result;
+	} else {
+		 printf("err");
+		 return NULL;
 	}
-	return result;
+}
+
+EdgeList* MatrixGraphRepresentation::getSimpleAdjFor(unsigned v) {
+	if (v < vertexCount) {
+		EdgeList *result = new EdgeList();
+		for (unsigned i = 0; i < vertexCount; i++) {
+			if (matrix[v][i] > -1) {
+				result->addAtBeginning(new Edge(v, i, matrix[v][i]));
+			}
+		}
+		return result;
+	} else {
+		printf("err");
+		return NULL;
+	}
 }

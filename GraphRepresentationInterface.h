@@ -18,6 +18,7 @@ public:
 	virtual unsigned vertexDegree(unsigned) = 0;
 	virtual int searchEdge(unsigned, unsigned) = 0;
 	virtual EdgeStack* getAdjFor(unsigned) = 0;
+	virtual EdgeList* getSimpleAdjFor(unsigned) = 0;
 	virtual void printListGraph(void);
 	virtual void loadFromFile(void);
 	virtual void printMatrixGraph(void);

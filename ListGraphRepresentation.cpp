@@ -82,3 +82,7 @@ EdgeStack* ListGraphRepresentation::getAdjFor(unsigned v) {
 	delete tmp;
 	return result;
 }
+
+EdgeList* ListGraphRepresentation::getSimpleAdjFor(unsigned v) {
+	return new EdgeList(edgesList[v]);
+}

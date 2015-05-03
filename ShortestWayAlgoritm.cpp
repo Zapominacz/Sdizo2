@@ -63,7 +63,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 	x[startVertex] = startVertex;
 	vWeights[startVertex] = 0;
 	for (unsigned i = 0; i < vCount; i++) {
-		for (unsigned j = 0; j < graph->getEdgeCount(); j++) {
+		for (unsigned j = 0; j < vCount; j++) {
 			int w = graph->searchEdge(i, j);
 			if (w > -1) {
 				if (vWeights[i] < INF && vWeights[i] + w < vWeights[j]) {
@@ -73,10 +73,11 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 			}
 		}
 	}
-	for (int i = 0; i < graph->getVertexCount(); i++) {
+	for (unsigned i = 0; i < vCount; i++) {
 		base->insertEdge(i, x[i], vWeights[i]);
 	}
 	delete[] vWeights;
+	delete[] x;
 	return base;
 }
 

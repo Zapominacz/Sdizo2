@@ -12,6 +12,7 @@ public:
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);
 	virtual EdgeStack* getAdjFor(unsigned);
+	virtual EdgeList* getSimpleAdjFor(unsigned);
 private:
 	EdgeList** edgesList;
 	void removeLists(void);
