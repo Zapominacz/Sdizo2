@@ -36,6 +36,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	int *weightBuf = new int[vCount];
 	//poczakowo wszystkie drogi maj¹ wartoœæ INF
 	for (unsigned i = 0; i < vCount; i++) {
+		incidences[i] = -1;
 		distances[i] = INF;
 	}
 	weightBuf[startVertex] = -1;
@@ -44,7 +45,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	//przechowuje krawêdzie w kopcu
 	MyHeap* heap = new MyHeap();
 	heap->push(startVertex, 0);
-	for (unsigned i = 0; i < base->getVertexCount(); i++) {
+	for (unsigned i = 0; i < vCount; i++) {
 		if (i == startVertex) {
 			continue;
 		} else {
@@ -54,15 +55,17 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	while (heap->getSize() > 0) {
 		int key = heap->seekKey();
 		int u = heap->pop(); //wyci¹gam wierzcho³ek o najmneijszej wadze i pobieram jego s¹siednie wierzcho³ki
-		EdgeStack* adjList = graph->getAdjFor(u);
-		for (unsigned i = 0; i < adjList->getSize(); i++) {
-			Edge* tmp = adjList->pop();
+		EdgeList* adjList = graph->getSimpleAdjFor(u);
+		unsigned adjListSize = adjList->getSize();
+		for (unsigned i = 0; i < adjListSize; i++) {
+			Edge* tmp = adjList->pop(0);
 			int v = tmp->v2;
 			int weight = tmp->weight;
-			if (key + weight < heap->getKey(v)) { //zgodnie z nierównoœci¹ trójk¹ta jeœli droga jest lepsza
+			int key2 = heap->getKey(v);
+			if (key + weight < key2) { //zgodnie z nierównoœci¹ trójk¹ta jeœli droga jest lepsza
 				heap->setKey(v, key + weight); //zastêpuje najkrótsz¹ trasê do tego wierzcho³ka now¹
 				weightBuf[v] = weight;
-				distances[v] = weight + distances[u];
+				distances[v] = key + weight;
 				incidences[v] = u; //aktualizuje zmienne pomocnicze
 			}
 			delete tmp;
@@ -70,7 +73,9 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 		delete adjList;
 	}
 	for (unsigned i = 0; i < vCount; i++) {
-		base->insertEdge(incidences[i], i, weightBuf[i]);
+		if (incidences[i] >= 0) {
+			base->insertEdge(incidences[i], i, weightBuf[i]);
+		}
 	}
 	delete[] weightBuf;
 	delete[] incidences;

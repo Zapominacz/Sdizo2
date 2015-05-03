@@ -227,42 +227,73 @@ void test2() {
 	int vCount[] = { 10, 50, 100, 500, 750 };
 	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f };
 	int times[] = { 100, 100, 100, 5, 2 };
-	GraphRepresentationInterface* graph = new ListGraphRepresentation(true, 1);
-	GraphRepresentationInterface* graph2 = new ListGraphRepresentation(true, 1);
-	GraphRepresentationInterface* graph3 = new ListGraphRepresentation(true, 1);
-	ShortestWayAlgoritm* mst = new ShortestWayAlgoritm(graph, 0);
-	fstream file("resultS.txt", std::ios_base::out);
-	fstream file2("resultS2.txt", std::ios_base::out);
+	GraphRepresentationInterface* graphL = new ListGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graphL2 = new ListGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graphL3 = new ListGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graphM = new MatrixGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graphM2 = new MatrixGraphRepresentation(true, 1);
+	GraphRepresentationInterface* graphM3 = new MatrixGraphRepresentation(true, 1);
+	ShortestWayAlgoritm* mstM = new ShortestWayAlgoritm(graphM, 0);
+	ShortestWayAlgoritm* mstL = new ShortestWayAlgoritm(graphL, 0);
+	fstream file1("resultSM1.txt", std::ios_base::app);
+	fstream file2("resultSM2.txt", std::ios_base::app);
+	fstream file3("resultSL1.txt", std::ios_base::app);
+	fstream file4("resultSL2.txt", std::ios_base::app);
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 4; j++) {
-			Timer *timer = new Timer();
+			Timer *timer1 = new Timer();
 			Timer *timer2 = new Timer();
-			graph->generateGraph(vCount[i], dens[j], 1, 99);
+			Timer *timer3 = new Timer();
+			Timer *timer4 = new Timer();
+			graphL->generateGraph(vCount[i], dens[j], 1, 99);
+			graphM->generateGraph(vCount[i], dens[j], 1, 99);
 			for (int k = 0; k < times[i]; k++) {
-				timer->startTimer();
-				graph2 = mst->makeDikstra(graph2);
-				timer->stopTimer();
+				timer1->startTimer();
+				graphM2 = mstM->makeDikstra(graphM2);
+				timer1->stopTimer();
 				timer2->startTimer();
-				graph3 = mst->makeBellman(graph3);
+				graphM3 = mstM->makeBellman(graphM3);
 				timer2->stopTimer();
+				timer3->startTimer();
+				graphL2 = mstL->makeDikstra(graphL2);
+				timer3->stopTimer();
+				timer4->startTimer();
+				graphL3 = mstL->makeBellman(graphL3);
+				timer4->stopTimer();
 
-				timer->nextMeasure();
+				timer1->nextMeasure();
 				timer2->nextMeasure();
+				timer3->nextMeasure();
+				timer4->nextMeasure();
 			}
-			file << vCount[i] << " - " << dens[j] << " - " << timer->getAvgTime();
+			file1 << vCount[i] << " - " << dens[j] << " - " << timer1->getAvgTime();
 			file2 << vCount[i] << " - " << dens[j] << " - " << timer2->getAvgTime();
-			delete timer;
+			file3 << vCount[i] << " - " << dens[j] << " - " << timer3->getAvgTime();
+			file4 << vCount[i] << " - " << dens[j] << " - " << timer4->getAvgTime();
+			delete timer1;
 			delete timer2;
+			delete timer3;
+			delete timer4;
 		}
 	}
-	file.close();
+	delete graphM;
+	delete graphL;
+	delete graphM2;
+	delete graphL2;
+	delete graphM3;
+	delete graphL3;
+	delete mstM;
+	delete mstL;
+	file1.close();
 	file2.close();
+	file3.close();
+	file4.close();
 }
 
 int _tmain(int argc, _TCHAR* argv[]) {
 	presentation();
 	//test1();
-	//test2();
+	test2();
 	return 0;
 }
 

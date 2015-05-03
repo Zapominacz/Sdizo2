@@ -26,7 +26,7 @@ GraphRepresentationInterface* MinimumSpanningTreeAlgoritm::makePrimMst(GraphRepr
 	base->clear(vCount);
 	MyHeap *heap = new MyHeap();
 	bool *addedVertexes = new bool[vCount];
-	int *x = new int[vCount]; //pomocnicza lista do generowania grafu wyniku
+	int *x = new int[vCount]; //pomocnicza lista krawedzi do generowania grafu wyniku
 	int *w = new int[vCount]; //pomocnicza lista rzeczywistych wag
 	x[0] = -2;
 	heap->push(0, 0);

@@ -80,6 +80,7 @@ int MyHeap::getKey(const int& value) {
 			fixHeapDown(0);
 		}
 	}
+	size = savedSize;
 	return -1; //nie znaleziono, napis wyciêto z powodu wydajnoœci cout
 }
 
