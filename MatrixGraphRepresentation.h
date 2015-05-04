@@ -10,6 +10,7 @@ public:
 	virtual void clear(unsigned);
 	void createMatrix(void);
 	void deleteMatrix(void);
+	virtual Edge* getAllEdges(void);
 	virtual bool deleteEdge(unsigned, unsigned);
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);

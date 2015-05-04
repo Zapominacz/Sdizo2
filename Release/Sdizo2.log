@@ -1,8 +1,27 @@
-﻿Build started 5/3/2015 3:00:38 PM.
-     1>Project "D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Sdizo2\Sdizo2.vcxproj" on node 2 (Build target(s)).
+﻿Build started 5/4/2015 7:39:55 PM.
+     1>Project "D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Sdizo2\Sdizo2.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         D:\Programowanie\Visual Studio 2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\Sdizo2.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Sdizo2.cpp
+         D:\Programowanie\Visual Studio 2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\Sdizo2.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         D:\Programowanie\Visual Studio 2013\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\Sdizo2.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt EdgeList.cpp EdgeStack.cpp GraphRepresentationInterface.cpp ListGraphRepresentation.cpp MatrixGraphRepresentation.cpp MinimumSpanningTreeAlgoritm.cpp MyHeap.cpp MyList.cpp Sdizo2.cpp ShortestWayAlgoritm.cpp Timer.cpp UnionFind.cpp
+         EdgeList.cpp
+         EdgeStack.cpp
+         GraphRepresentationInterface.cpp
+         ListGraphRepresentation.cpp
+     1>ListGraphRepresentation.cpp(93): warning C4018: '<' : signed/unsigned mismatch
+         MatrixGraphRepresentation.cpp
+     1>MatrixGraphRepresentation.cpp(137): warning C4018: '<' : signed/unsigned mismatch
+     1>MatrixGraphRepresentation.cpp(138): warning C4018: '<' : signed/unsigned mismatch
+         MinimumSpanningTreeAlgoritm.cpp
+         MyHeap.cpp
+     1>MyHeap.cpp(123): warning C4018: '<' : signed/unsigned mismatch
+         MyList.cpp
          Sdizo2.cpp
+         ShortestWayAlgoritm.cpp
+     1>ShortestWayAlgoritm.cpp(112): warning C4018: '<' : signed/unsigned mismatch
+         Timer.cpp
+         UnionFind.cpp
+     1>UnionFind.cpp(15): warning C4018: '<' : signed/unsigned mismatch
        Link:
          D:\Programowanie\Visual Studio 2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.lib" /MACHINE:X86 /SAFESEH Release\EdgeList.obj
          Release\EdgeStack.obj
@@ -17,9 +36,11 @@
          Release\stdafx.obj
          Release\Timer.obj
          Release\UnionFind.obj
-     1>LINK : fatal error LNK1104: cannot open file 'D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.exe'
-     1>Done Building Project "D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Sdizo2\Sdizo2.vcxproj" (Build target(s)) -- FAILED.
+         Generating code
+         Finished generating code
+         Sdizo2.vcxproj -> D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Release\Sdizo2.exe
+     1>Done Building Project "D:\Documents\Projekty\Cpp\SdizoProjekt\Sdizo2\Sdizo2\Sdizo2.vcxproj" (Rebuild target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:00.39
+Time Elapsed 00:00:02.71

@@ -8,6 +8,7 @@ public:
 	virtual ~ListGraphRepresentation();
 	virtual bool insertEdge(unsigned int, unsigned int, int);
 	virtual void clear(unsigned);
+	virtual Edge* getAllEdges(void);
 	virtual bool deleteEdge(unsigned, unsigned);
 	virtual unsigned vertexDegree(unsigned);
 	virtual int searchEdge(unsigned, unsigned);

@@ -86,3 +86,18 @@ EdgeStack* ListGraphRepresentation::getAdjFor(unsigned v) {
 EdgeList* ListGraphRepresentation::getSimpleAdjFor(unsigned v) {
 	return new EdgeList(edgesList[v]);
 }
+
+Edge* ListGraphRepresentation::getAllEdges() {
+	Edge* result = new Edge[edgeCount];
+	int count = 0;
+	for (int i = 0; i < vertexCount; i++) {
+		EdgeList* el = edgesList[i];
+		int size = el->getSize();
+		for (int j = 0; j < size; j++) {
+			result[count] = *el->getAt(j);
+			result[count].v1 = i;
+			count++;
+		}
+	}
+	return result;
+}

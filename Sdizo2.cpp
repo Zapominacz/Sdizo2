@@ -187,46 +187,80 @@ void test1() {
 	using namespace std;
 	int vCount[] = { 10, 50, 100, 500, 750 };
 	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f };
-	int times[] = { 100, 100, 100, 5, 2};
-	GraphRepresentationInterface* graph = new MatrixGraphRepresentation(false, 1);
-	GraphRepresentationInterface* graph2 = new MatrixGraphRepresentation(false, 1);
-	GraphRepresentationInterface* graph3 = new MatrixGraphRepresentation(false, 1);
-	MinimumSpanningTreeAlgoritm* mst = new MinimumSpanningTreeAlgoritm(graph);
-	fstream file("result.txt", std::ios_base::app);
-	fstream file2("result2.txt", std::ios_base::app);
+	int times[] = { 100, 100, 100, 5, 2 };
+	GraphRepresentationInterface* graphL = new ListGraphRepresentation(false, 1);
+	GraphRepresentationInterface* graphL2 = new ListGraphRepresentation(false, 1);
+	GraphRepresentationInterface* graphL3 = new ListGraphRepresentation(false, 1);
+	GraphRepresentationInterface* graphM = new MatrixGraphRepresentation(false, 1);
+	GraphRepresentationInterface* graphM2 = new MatrixGraphRepresentation(false, 1);
+	GraphRepresentationInterface* graphM3 = new MatrixGraphRepresentation(false, 1);
+	MinimumSpanningTreeAlgoritm* mstM = new MinimumSpanningTreeAlgoritm(graphM);
+	MinimumSpanningTreeAlgoritm* mstL = new MinimumSpanningTreeAlgoritm(graphL);
+	fstream file1("resultMM1.txt", std::ios_base::app);
+	fstream file2("resultMM2.txt", std::ios_base::app);
+	fstream file3("resultML1.txt", std::ios_base::app);
+	fstream file4("resultML2.txt", std::ios_base::app);
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 4; j++) {
-			Timer *timer = new Timer();
+			Timer *timer1 = new Timer();
 			Timer *timer2 = new Timer();
-			graph->generateGraph(vCount[i], dens[j], 1, 99);
+			Timer *timer3 = new Timer();
+			Timer *timer4 = new Timer();
+			graphL->generateGraph(vCount[i], dens[j], 1, 99);
+			graphM->generateGraph(vCount[i], dens[j], 1, 99);
 			for (int k = 0; k < times[i]; k++) {
-				timer->startTimer();
-				graph2 = mst->makeKruskalMst(graph2);
-				timer->stopTimer();
+				timer1->startTimer();
+				graphM2 = mstM->makePrimMst(graphM2);
+				timer1->stopTimer();
 				timer2->startTimer();
-				graph3 = mst->makePrimMst(graph3);
+				graphM3 = mstM->makeKruskalMst(graphM3);
 				timer2->stopTimer();
-				cout << vCount[i] << " - " << dens[j] << " - " << k << endl;
-				timer->nextMeasure();
+				timer3->startTimer();
+				graphL2 = mstL->makePrimMst(graphL2);
+				timer3->stopTimer();
+				timer4->startTimer();
+				graphL3 = mstL->makeKruskalMst(graphL3);
+				timer4->stopTimer();
+
+				timer1->nextMeasure();
 				timer2->nextMeasure();
+				timer3->nextMeasure();
+				timer4->nextMeasure();
+				cout << vCount[i] << " - " << dens[j] << " - " << k << endl;
 			}
-			file << vCount[i] << " - " << dens[j] << " - " << timer->getAvgTime() << endl;
+			file1 << vCount[i] << " - " << dens[j] << " - " << timer1->getAvgTime() << endl;
 			file2 << vCount[i] << " - " << dens[j] << " - " << timer2->getAvgTime() << endl;
-			file.flush();
+			file3 << vCount[i] << " - " << dens[j] << " - " << timer3->getAvgTime() << endl;
+			file4 << vCount[i] << " - " << dens[j] << " - " << timer4->getAvgTime() << endl;
+			file1.flush();
 			file2.flush();
-			delete timer;
+			file3.flush();
+			file4.flush();
+			delete timer1;
 			delete timer2;
+			delete timer3;
+			delete timer4;
 		}
 	}
-	file.close();
+	delete graphM;
+	delete graphL;
+	delete graphM2;
+	delete graphL2;
+	delete graphM3;
+	delete graphL3;
+	delete mstM;
+	delete mstL;
+	file1.close();
 	file2.close();
+	file3.close();
+	file4.close();
 }
 
 void test2() {
 	using namespace std;
-	int vCount[] = { 10, 50, 100, 500, 750 };
-	float dens[] = { 0.25f, 0.5f, 0.75f, 0.99f };
-	int times[] = { 100, 100, 100, 5, 2 };
+	int vCount[] = { 750 };
+	float dens[] = { 0.75f, 0.99f };
+	int times[] = { 2 };
 	GraphRepresentationInterface* graphL = new ListGraphRepresentation(true, 1);
 	GraphRepresentationInterface* graphL2 = new ListGraphRepresentation(true, 1);
 	GraphRepresentationInterface* graphL3 = new ListGraphRepresentation(true, 1);
@@ -265,11 +299,16 @@ void test2() {
 				timer2->nextMeasure();
 				timer3->nextMeasure();
 				timer4->nextMeasure();
+				cout << vCount[i] << " - " << dens[j] << " - " << k << endl;
 			}
-			file1 << vCount[i] << " - " << dens[j] << " - " << timer1->getAvgTime();
-			file2 << vCount[i] << " - " << dens[j] << " - " << timer2->getAvgTime();
-			file3 << vCount[i] << " - " << dens[j] << " - " << timer3->getAvgTime();
-			file4 << vCount[i] << " - " << dens[j] << " - " << timer4->getAvgTime();
+			file1 << vCount[i] << " - " << dens[j] << " - " << timer1->getAvgTime() << endl;
+			file2 << vCount[i] << " - " << dens[j] << " - " << timer2->getAvgTime() << endl;
+			file3 << vCount[i] << " - " << dens[j] << " - " << timer3->getAvgTime() << endl;
+			file4 << vCount[i] << " - " << dens[j] << " - " << timer4->getAvgTime() << endl;
+			file1.flush();
+			file2.flush();
+			file3.flush();
+			file4.flush();
 			delete timer1;
 			delete timer2;
 			delete timer3;
@@ -293,7 +332,7 @@ void test2() {
 int _tmain(int argc, _TCHAR* argv[]) {
 	presentation();
 	//test1();
-	test2();
+	//test2();
 	return 0;
 }
 

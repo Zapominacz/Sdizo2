@@ -37,14 +37,14 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 	//poczakowo wszystkie drogi maj¹ wartoœæ INF
 	for (unsigned i = 0; i < vCount; i++) {
 		incidences[i] = -1;
+		weightBuf[i] = -1;
 		distances[i] = INF;
 	}
-	weightBuf[startVertex] = -1;
 	incidences[startVertex] = startVertex;
 	distances[startVertex] = 0;
 	//przechowuje krawêdzie w kopcu
 	MyHeap* heap = new MyHeap();
-	heap->push(startVertex, 0);
+	heap->push(0, startVertex);
 	for (unsigned i = 0; i < vCount; i++) {
 		if (i == startVertex) {
 			continue;
@@ -73,7 +73,7 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeDikstra(GraphRepresentati
 		delete adjList;
 	}
 	for (unsigned i = 0; i < vCount; i++) {
-		if (incidences[i] >= 0) {
+		if (incidences[i] > -1 && weightBuf[i] > -1) {
 			base->insertEdge(incidences[i], i, weightBuf[i]);
 		}
 	}
@@ -93,28 +93,36 @@ GraphRepresentationInterface* ShortestWayAlgoritm::makeBellman(GraphRepresentati
 	distances = new int[vCount];
 	int *incidences = new int[vCount];
 	int *weightBuf = new int[vCount];
-	weightBuf[startVertex] = -1;
+	
 	for (unsigned i = 0; i < vCount; i++) {
+		incidences[i] = -1;
+		weightBuf[i] = -1;
 		distances[i] = INF;
 	}
 	incidences[startVertex] = startVertex;//zmienne pomocnicze i ich inicjalizacja
 	distances[startVertex] = 0;
 	
+	Edge* el = graph->getAllEdges();
+
 	for (unsigned i = 0; i < vCount; i++) {
-		for (unsigned j = 0; j < vCount; j++) {
-			int w = graph->searchEdge(i, j);
-			if (w > -1) { //iteruje po wszystkich mo¿liwych krawêdziach, jeœli istnieje
-				if (distances[i] < INF && distances[i] + w < distances[j]) { //sprawdzam czy jest to lepsza droga z pocz¹tkowego
-					distances[j] = distances[i] + w; //wierzcho³ka i jeœli tak, zamieniam
-					incidences[j] = i;
-					weightBuf[j] = w;
-				}
+		for (unsigned j = 0; j < graph->getEdgeCount(); j++) {
+			unsigned v1 = el[j].v1;
+			unsigned v2 = el[j].v2;
+			unsigned w = el[j].weight;
+			if (distances[v1] < INF && distances[v1] + w < distances[v2]) { //sprawdzam czy jest to lepsza droga z pocz¹tkowego
+				distances[v2] = distances[v1] + w; //wierzcho³ka i jeœli tak, zamieniam
+				incidences[v2] = v1;
+				weightBuf[v2] = w;
 			}
 		}
+		
 	}
 	for (unsigned i = 0; i < vCount; i++) {
-		base->insertEdge(incidences[i], i, weightBuf[i]); //tworze graf wyniku
+		if (incidences[i] > -1 && weightBuf[i] > -1) {
+			base->insertEdge(incidences[i], i, weightBuf[i]); //tworze graf wyniku
+		}
 	}
+	delete[] el;
 	delete[] weightBuf;
 	delete[] incidences;
 	return base;

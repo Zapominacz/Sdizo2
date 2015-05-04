@@ -130,3 +130,18 @@ EdgeList* MatrixGraphRepresentation::getSimpleAdjFor(unsigned v) {
 		return NULL;
 	}
 }
+
+Edge* MatrixGraphRepresentation::getAllEdges() {
+	Edge* result = new Edge[edgeCount];
+	int count = 0;
+	for (int i = 0; i < vertexCount; i++) {
+		for (int j = 0; j < vertexCount; j++) {
+			if (matrix[i][j] > -1) {
+				Edge e = Edge(i, j, matrix[i][j]);
+				result[count] = e;
+				count++;
+			}
+		}
+	}
+	return result;
+}

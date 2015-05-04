@@ -22,6 +22,7 @@ public:
 	virtual void printListGraph(void);
 	virtual void loadFromFile(void);
 	virtual void printMatrixGraph(void);
+	virtual Edge* getAllEdges(void) = 0;
 	virtual void generateGraph(const unsigned int, float, const int, const int);
 	unsigned getVertexCount(void) { return vertexCount;  }
 	unsigned getEdgeCount(void) { return edgeCount; }
